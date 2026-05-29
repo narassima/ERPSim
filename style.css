@@ -842,8 +842,8 @@ main.main-content::-webkit-scrollbar-thumb:hover {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: var(--dark-grey);
-  color: #fff;
+  background: var(--primary);
+  color: #ffffff;
 }
 
 .flow-body {
@@ -993,6 +993,7 @@ main.main-content::-webkit-scrollbar-thumb:hover {
 /* Scrollable pipeline row */
 .bfd-pipeline-scroll {
   overflow-x: auto;
+  overflow-y: visible; /* Allow active node scale effect to show without vertical clipping */
   padding-bottom: 12px;
   /* Gold scrollbar */
 }
@@ -1013,7 +1014,8 @@ main.main-content::-webkit-scrollbar-thumb:hover {
   align-items: center;
   gap: 0;
   min-width: max-content;
-  padding: 4px 0 8px 0;
+  padding: 18px 16px 22px 16px; /* Generous vertical padding so scale(1.05) ring never clips */
+  overflow: visible;
 }
 
 /* Node */
@@ -1037,9 +1039,10 @@ main.main-content::-webkit-scrollbar-thumb:hover {
 }
 
 .bfd-node.bfd-node-active {
-  background: rgba(75, 163, 227, 0.12);
-  outline: 2px solid var(--primary);
+  background: rgba(75, 163, 227, 0.15);
+  box-shadow: 0 0 0 2.5px var(--primary), 0 8px 28px rgba(75, 163, 227, 0.3);
   transform: translateY(-4px) scale(1.05);
+  /* Use box-shadow instead of outline so it does not clip inside a scrollable container */
 }
 
 .bfd-node-icon {
@@ -1070,15 +1073,17 @@ main.main-content::-webkit-scrollbar-thumb:hover {
 }
 
 .bfd-node-doc {
-  background: var(--dark-grey);
-  color: var(--primary);
+  background: var(--primary);  /* Solid sky-blue pill — always readable on any background */
+  color: #ffffff;              /* Pure white text for maximum contrast */
   padding: 3px 8px;
   border-radius: 10px;
-  font-size: 0.7rem;
+  font-size: 0.68rem;
   font-family: monospace;
   font-weight: 700;
   text-align: center;
   white-space: nowrap;
+  letter-spacing: 0.3px;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.25);
 }
 
 /* Connector line between nodes */
@@ -1094,19 +1099,19 @@ main.main-content::-webkit-scrollbar-thumb:hover {
 
 /* Details panel - full width, prominent */
 .bfd-detail-panel {
-  background: var(--dark-grey);
+  background: var(--panel-bg);
   border-radius: 20px;
-  border: 1px solid rgba(92, 131, 116, 0.25);
+  border: 1px solid var(--border);
   border-top: 4px solid var(--primary);
   overflow: hidden;
-  box-shadow: 0 8px 30px rgba(0,0,0,0.25);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.15);
   animation: slideUp 0.3s ease-out;
 }
 
 .bfd-detail-header {
   padding: 20px 28px;
-  border-bottom: 1px solid rgba(255,255,255,0.06);
-  background: rgba(255,255,255,0.03);
+  border-bottom: 1px solid var(--border);
+  background: var(--background);
 }
 
 .bfd-detail-body {
@@ -1117,7 +1122,7 @@ main.main-content::-webkit-scrollbar-thumb:hover {
 
 .bfd-detail-block {
   padding: 22px 28px;
-  border-right: 1px solid rgba(255,255,255,0.05);
+  border-right: 1px solid var(--border);
 }
 
 .bfd-detail-block:last-child {
@@ -1125,11 +1130,11 @@ main.main-content::-webkit-scrollbar-thumb:hover {
 }
 
 .bfd-detail-dark {
-  background: var(--dark-grey-panel);
+  background: var(--background);
 }
 
 .bfd-detail-label {
-  color: #94a3b8;
+  color: var(--text-muted);   /* Adapts to light and dark theme */
   font-size: 0.75rem;
   text-transform: uppercase;
   font-weight: 700;
@@ -1138,7 +1143,7 @@ main.main-content::-webkit-scrollbar-thumb:hover {
 }
 
 .bfd-detail-value {
-  color: #f1f5f9;
+  color: var(--text-main);    /* Theme-aware: dark charcoal in light mode, light slate in dark mode */
   font-size: 1.05rem;
   font-weight: 700;
   line-height: 1.4;

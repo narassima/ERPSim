@@ -1,0 +1,1184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Offline Excel Ledger Instruction Guide - ERP ERP Logistics Simulator</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Google Material Symbols -->
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
+  <style>
+    :root {
+      --primary: #d4af37; /* Metallic Yellow / Gold */
+      --dark-grey: #161719; /* Deep Charcoal */
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --border: #e2e8f0;
+      --background: #f8fafc;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      color: var(--text-main);
+      background-color: var(--background);
+      line-height: 1.6;
+      padding-bottom: 60px;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Outfit', sans-serif;
+      color: var(--dark-grey);
+      margin-bottom: 12px;
+      font-weight: 700;
+    }
+
+    /* Header Bar */
+    header {
+      background-color: var(--dark-grey);
+      border-bottom: 2px solid var(--primary);
+      color: #ffffff;
+      padding: 24px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    }
+
+    .header-title h1 {
+      color: #ffffff;
+      font-size: 1.5rem;
+      margin-bottom: 4px;
+    }
+
+    .header-title span {
+      color: var(--primary);
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* Print/PDF button styled beautifully in metallic gold */
+    .btn-print {
+      background: linear-gradient(135deg, var(--primary) 0%, #b89320 100%);
+      color: #161719;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 9999px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .btn-print:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(212, 175, 55, 0.45);
+    }
+
+    .btn-print:active {
+      transform: scale(0.95);
+    }
+
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+
+    /* Content Area */
+    .container {
+      max-width: 960px;
+      margin: 40px auto;
+      padding: 0 24px;
+    }
+
+    .card {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 32px;
+      margin-bottom: 28px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+    }
+
+    p {
+      margin-bottom: 16px;
+      color: var(--text-muted);
+    }
+
+    ol, ul {
+      margin-bottom: 20px;
+      padding-left: 24px;
+    }
+
+    li {
+      margin-bottom: 8px;
+      color: var(--text-muted);
+    }
+
+    /* Folder Structure Representation */
+    .folder-tree {
+      background-color: #f1f5f9;
+      border-left: 4px solid var(--primary);
+      border-radius: 8px;
+      font-family: monospace;
+      padding: 18px;
+      margin-bottom: 24px;
+      font-size: 0.95rem;
+    }
+
+    /* Table styling */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 24px;
+      margin-top: 12px;
+    }
+
+    th, td {
+      border: 1px solid var(--border);
+      padding: 12px 16px;
+      text-align: left;
+      font-size: 0.9rem;
+    }
+
+    th {
+      background-color: #f8fafc;
+      font-weight: 700;
+      color: var(--dark-grey);
+    }
+
+    td strong {
+      color: var(--dark-grey);
+    }
+
+    .badge-primary {
+      background-color: var(--primary);
+      color: #161719;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+
+    /* Print styling rules */
+    @media print {
+      body {
+        background-color: #ffffff;
+        color: #000000;
+        padding-bottom: 0;
+      }
+      header {
+        display: none; /* Hide interactive header on paper */
+      }
+      .container {
+        max-width: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      .card {
+        border: none;
+        box-shadow: none;
+        padding: 0;
+        margin-bottom: 40px;
+        page-break-inside: avoid;
+      }
+      th {
+        background-color: #f1f5f9 !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      .badge-primary {
+        border: 1px solid #000;
+        color: #000;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Premium Dark Grey & Gold Header -->
+  <header>
+    <div class="header-title">
+      <h1>ERP Logistics Simulation Ledger</h1>
+      <span>Offline Excel Progress Templates &amp; Inputs Guide</span>
+    </div>
+    <button onclick="window.print()" class="btn-print">
+      <span class="material-symbols-outlined">picture_as_pdf</span>
+      <span>Save Guide as PDF</span>
+    </button>
+  </header>
+
+  <div class="container">
+    
+    <!-- Card 1: Overview -->
+    <div class="card">
+      <h2>📑 Understanding the Spreadsheet Structure</h2>
+      <p>The offline Excel template workbook is designed to mirror the <strong>modules and business functions</strong> of the web interface. Grouping steps into separate tabs makes the end-to-end integration cycles exceptionally easy to understand and fill out offline.</p>
+      
+      <div class="folder-tree">
+📁 ERP_template_empty.xlsx (10 Sheets)<br>
+├── 📄 Tab 1: Progress &amp; Config &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;(Student ID &amp; Completed Step Indices)<br>
+├── 📄 Tab 2: Generated Documents &nbsp; &nbsp; &nbsp; &nbsp; (Simulated ERP Document DB Registry)<br>
+├── 📄 Tab 3: Sales &amp; Distribution Setup &nbsp; (Setup Master Data - Step 1 to 3)<br>
+├── 📄 Tab 4: Materials Management Setup &nbsp; (Component Registration - Step 4)<br>
+├── 📄 Tab 5: Sales and Distribution (Pre &nbsp;(Inquiries, Quotes, Orders - Step 5 to 7)<br>
+├── 📄 Tab 6: Production Planning Setup &nbsp; &nbsp;(Routings, Product Groups, PIRs - Step 8 to 12)<br>
+├── 📄 Tab 7: Material Requirements Plan &nbsp; (MRP planning schedule - Step 13 &amp; 14)<br>
+├── 📄 Tab 8: Procurement Process (MM) &nbsp; &nbsp; (Purchasing component stock - Step 15 to 31)<br>
+├── 📄 Tab 9: Production Execution (PP) &nbsp; &nbsp;(Staging, Assembly, Cost Settlement - Step 32 to 45)<br>
+└── 📄 Tab 10: Sales Fulfillment &amp; Settle (Deliveries, billing, payment clearing - Step 46 to 54)
+      </div>
+      <p>💡 <em>When logging offline, enter your parameters in the columns/cells described below, then upload the workbook inside the web simulator using the <strong>Import File</strong> button at the top header to restore your state!</em></p>
+    </div>
+
+    <!-- Card 2: Tab 1 details -->
+    <div class="card">
+      <h2>🔑 Tab 1: Progress &amp; Config</h2>
+      <p>Defines who you are and registers the steps you have completed. Fill in <strong>Column C (Value)</strong> for the rows:</p>
+      <table>
+        <thead>
+          <tr>
+            <th>Parameter Label (Col A)</th>
+            <th>System Key (Col B)</th>
+            <th>Value (Col C)</th>
+            <th>Description &amp; Real-Life Context</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Student 3-Digit ID (###)</strong></td>
+            <td>`studentId`</td>
+            <td><strong>e.g., `045`</strong></td>
+            <td>Your unique training identifier. Dynamically updates all customer names, material IDs, and audit codes in the database.</td>
+          </tr>
+          <tr>
+            <td><strong>Current Active Step</strong></td>
+            <td>`currentStep`</td>
+            <td><strong>e.g., `15`</strong></td>
+            <td>The sequential step number (1 to 54) you are currently working on in your ledger.</td>
+          </tr>
+          <tr>
+            <td><strong>Completed Steps List</strong></td>
+            <td>`completedSteps`</td>
+            <td><strong>e.g., `1,2,3,4,5`</strong></td>
+            <td>A comma-separated list of completed step numbers. When imported, the web app marks these as completed.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Card 3: Tab 2 details -->
+    <div class="card">
+      <h2>💾 Tab 2: Generated Documents Registry</h2>
+      <p>Represents the central database registry for simulated ERP document numbers. As transactions are posted in the simulator, document numbers are generated. Log your generated document IDs in <strong>Column C (Value Registered)</strong> to automatically enable autocompletes downstream:</p>
+      <table>
+        <thead>
+          <tr>
+            <th>Document Description</th>
+            <th>System DB Key</th>
+            <th>Example (Student ID 045)</th>
+            <th>Practical Rationale</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Customer ID</strong></td>
+            <td>`customerId`</td>
+            <td><strong>`US00045`</strong></td>
+            <td>Business partner master ID created in Step 1.</td>
+          </tr>
+          <tr>
+            <td><strong>Sales Inquiry ID</strong></td>
+            <td>`salesInquiry`</td>
+            <td><strong>`100000045`</strong></td>
+            <td>Standard pre-sales inquiry document.</td>
+          </tr>
+          <tr>
+            <td><strong>Sales Quotation ID</strong></td>
+            <td>`salesQuotation`</td>
+            <td><strong>`200000045`</strong></td>
+            <td>Legally binding customer quotation document.</td>
+          </tr>
+          <tr>
+            <td><strong>Sales Order ID</strong></td>
+            <td>`salesOrder`</td>
+            <td><strong>`300000045`</strong></td>
+            <td>Standard Wholesale Sales Order.</td>
+          </tr>
+          <tr>
+            <td><strong>Purchase Requisition</strong></td>
+            <td>`purchaseRequisition`</td>
+            <td><strong>`10005045`</strong></td>
+            <td>Internal requisition generated during MRP component shortage.</td>
+          </tr>
+          <tr>
+            <td><strong>Purchase Order ID</strong></td>
+            <td>`purchaseOrder`</td>
+            <td><strong>`450000045`</strong></td>
+            <td>Formal procurement commitment document sent to vendor.</td>
+          </tr>
+          <tr>
+            <td><strong>Production Order ID</strong></td>
+            <td>`productionOrder`</td>
+            <td><strong>`10000045`</strong></td>
+            <td>Shop floor authorization document for manufacturing assembly.</td>
+          </tr>
+          <tr>
+            <td><strong>Outbound Delivery ID</strong></td>
+            <td>`outboundDelivery`</td>
+            <td><strong>`800000045`</strong></td>
+            <td>Shipping delivery note registered in Heidelberg queue.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Card 4: Tab 3-10 details -->
+    <div class="card">
+      <h2>📝 Tabs 3 to 10: Detailed Transaction Logs</h2>
+      <p>These sheets are where you log your step-by-step transaction form field entries. In each sheet, <strong>Column F (Entered Value)</strong> is the designated input column.</p>
+      
+      <h3>📚 Standard ERP Case Study Value Guidelines:</h3>
+      
+      <h4>1. Organizational &amp; Control Constants (Enter exactly in Column F)</h4>
+      <table>
+        <thead>
+          <tr>
+            <th>Form Field Label</th>
+            <th>Internal Key</th>
+            <th>Required Value</th>
+            <th>Practical Rationale &amp; Context</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Company Code</td>
+            <td>`company_code`</td>
+            <td><strong>`DE00`</strong></td>
+            <td>Identifies the legal accounting subsidiary in Germany.</td>
+          </tr>
+          <tr>
+            <td>Sales Organization</td>
+            <td>`sales_org`</td>
+            <td><strong>`DS00`</strong></td>
+            <td>Wholesale division responsible for distributing products.</td>
+          </tr>
+          <tr>
+            <td>Delivering Plant</td>
+            <td>`plant` / `shipping_point`</td>
+            <td><strong>`HD00`</strong></td>
+            <td>The physical manufacturing plant and shipping hub in Heidelberg.</td>
+          </tr>
+          <tr>
+            <td>Reconciliation Account (Customer)</td>
+            <td>`recon_account`</td>
+            <td><strong>`12000000`</strong></td>
+            <td>Reconciles trade receivables domestic ledger in the general ledger.</td>
+          </tr>
+          <tr>
+            <td>Reconciliation Account (Vendor)</td>
+            <td>`recon_account`</td>
+            <td><strong>`30000000`</strong></td>
+            <td>Reconciles accounts payable vendor liabilities in the general ledger.</td>
+          </tr>
+          <tr>
+            <td>Payment Terms</td>
+            <td>`payment_term`</td>
+            <td><strong>`0001`</strong></td>
+            <td>Payable immediately, net due (standard wholesale baseline agreement).</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h4>2. Student ID Dependent Formatting (Replace `###` with your active ID)</h4>
+      <table>
+        <thead>
+          <tr>
+            <th>Field Label</th>
+            <th>Internal Key</th>
+            <th>Pattern Format</th>
+            <th>Example (Student ID 045)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Customer Name</td>
+            <td>`name`</td>
+            <td>`1 Elbe Cycle ###`</td>
+            <td><strong>`1 Elbe Cycle 045`</strong></td>
+          </tr>
+          <tr>
+            <td>Basic Bike ID</td>
+            <td>`material`</td>
+            <td>`GCBK1###`</td>
+            <td><strong>`GCBK1045`</strong></td>
+          </tr>
+          <tr>
+            <td>Endurance Bike ID</td>
+            <td>`material`</td>
+            <td>`GCBK2###`</td>
+            <td><strong>`GCBK2045`</strong></td>
+          </tr>
+          <tr>
+            <td>Custom Carbon Bike</td>
+            <td>`material`</td>
+            <td>`GCBK3###`</td>
+            <td><strong>`GCBK3045`</strong></td>
+          </tr>
+          <tr>
+            <td>Integrated GPS Computer</td>
+            <td>`gps_id`</td>
+            <td>`GPS1###`</td>
+            <td><strong>`GPS1045`</strong></td>
+          </tr>
+          <tr>
+            <td>Vendor / Supplier Name</td>
+            <td>`name`</td>
+            <td>`1 MagdePedal ###`</td>
+            <td><strong>`1 MagdePedal 045`</strong></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Card 5: Business Fields Glossary -->
+    <div class="card">
+      <h2>📖 Complete ERP Logistics Simulation Glossary (Tab by Tab)</h2>
+      <p>Understanding the practical, real-life meaning and context of each field in ERP makes it much easier to enter values offline. Refer to this comprehensive parameter dictionary organized by the respective worksheet tabs:</p>
+
+      <h3 style="margin-top: 24px; color: var(--primary); border-bottom: 2px solid #f1f5f9; padding-bottom: 6px;">🔑 Tab 1: Progress &amp; Config</h3>
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 25%;">Field Name</th>
+            <th style="width: 20%;">Field Key</th>
+            <th style="width: 35%;">Real-Life Business Context &amp; Meaning</th>
+            <th style="width: 20%;">Typical Value / Pattern</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Student 3-Digit ID</strong></td>
+            <td><code>studentId</code></td>
+            <td>Unique training identifier assigned to each student. It dynamically updates all customer names, vendor accounts, and material IDs to avoid data overlap on shared servers.</td>
+            <td><strong>E.g., `045` or `112`</strong></td>
+          </tr>
+          <tr>
+            <td><strong>Current Active Step</strong></td>
+            <td><code>currentStep</code></td>
+            <td>The sequential index number of the current operation you are performing (from Step 1 to Step 54).</td>
+            <td><strong>E.g., `15`</strong></td>
+          </tr>
+          <tr>
+            <td><strong>Completed Steps List</strong></td>
+            <td><code>completedSteps</code></td>
+            <td>A comma-separated log of all completed steps. The simulator reads this to unlock downstream processes and populate visual dashboards.</td>
+            <td><strong>E.g., `1,2,3,4,5,6,7`</strong></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3 style="margin-top: 24px; color: var(--primary); border-bottom: 2px solid #f1f5f9; padding-bottom: 6px;">💾 Tab 2: Generated Documents</h3>
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 25%;">Field Name</th>
+            <th style="width: 20%;">Field Key</th>
+            <th style="width: 35%;">Real-Life Business Context &amp; Meaning</th>
+            <th style="width: 20%;">Pattern Example (ID 045)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Customer ID</strong></td>
+            <td><code>customerId</code></td>
+            <td>The unique ERP master business partner record ID representing the customer account.</td>
+            <td><code>US00045</code></td>
+          </tr>
+          <tr>
+            <td><strong>Customer Name</strong></td>
+            <td><code>customerName</code></td>
+            <td>Legal wholesale trading entity name. Contains the student ID to differentiate student database records.</td>
+            <td><code>1 Elbe Cycle 045</code></td>
+          </tr>
+          <tr>
+            <td><strong>Sales Inquiry ID</strong></td>
+            <td><code>salesInquiry</code></td>
+            <td>Pre-sales document recording the customer's request for product pricing and availability.</td>
+            <td><code>100000045</code></td>
+          </tr>
+          <tr>
+            <td><strong>Sales Quotation ID</strong></td>
+            <td><code>salesQuotation</code></td>
+            <td>Legally binding proposal sent to the customer containing specific pricing, valid dates, and quantities.</td>
+            <td><code>200000045</code></td>
+          </tr>
+          <tr>
+            <td><strong>Sales Order ID</strong></td>
+            <td><code>salesOrder</code></td>
+            <td>Internal binding contract authorizing the delivery of goods under negotiated commercial conditions.</td>
+            <td><code>300000045</code></td>
+          </tr>
+          <tr>
+            <td><strong>Purchase Requisition ID</strong></td>
+            <td><code>purchaseRequisition</code></td>
+            <td>Internal procurement request generated automatically by MRP to notify purchasing of component shortages.</td>
+            <td><code>10005045</code></td>
+          </tr>
+          <tr>
+            <td><strong>Vendor ID</strong></td>
+            <td><code>vendorId</code></td>
+            <td>Master record identifier representing the external partner/supplier supplying raw components.</td>
+            <td><code>VN00045</code></td>
+          </tr>
+          <tr>
+            <td><strong>RFQ Document ID</strong></td>
+            <td><code>vendorRfq</code></td>
+            <td>Request for Quotation sent out to multiple prospective suppliers to bid on material replenishment.</td>
+            <td><code>600000045</code></td>
+          </tr>
+          <tr>
+            <td><strong>Supplier Quotation ID</strong></td>
+            <td><code>vendorQuotation</code></td>
+            <td>Formal bid received back from a supplier specifying prices, quantities, and delivery conditions.</td>
+            <td><code>700000045</code></td>
+          </tr>
+          <tr>
+            <td><strong>Purchase Order ID</strong></td>
+            <td><code>purchaseOrder</code></td>
+            <td>Legally binding procurement contract sent to a vendor committing to purchase specified component stocks.</td>
+            <td><code>450000045</code></td>
+          </tr>
+          <tr>
+            <td><strong>Production Order ID</strong></td>
+            <td><code>productionOrder</code></td>
+            <td>Released workshop authorization document directing shop floor workers to stage and assemble bikes.</td>
+            <td><code>10000045</code></td>
+          </tr>
+          <tr>
+            <td><strong>Outbound Delivery ID</strong></td>
+            <td><code>outboundDelivery</code></td>
+            <td>Shipping ledger document representing goods prepared for dispatch at the Heidelberg shipping point.</td>
+            <td><code>800000045</code></td>
+          </tr>
+          <tr>
+            <td><strong>Customer Invoice ID</strong></td>
+            <td><code>customerInvoice</code></td>
+            <td>Accounts Receivable invoice sent to the customer requesting payment for fulfilled goods.</td>
+            <td><code>950000045</code></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3 style="margin-top: 24px; color: var(--primary); border-bottom: 2px solid #f1f5f9; padding-bottom: 6px;">📄 Tab 3: Sales &amp; Distribution Setup (Master Data)</h3>
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 25%;">Field Name</th>
+            <th style="width: 20%;">Field Key</th>
+            <th style="width: 35%;">Real-Life Business Context &amp; Meaning</th>
+            <th style="width: 20%;">Required Value / Pattern</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>BP Role</strong></td>
+            <td><code>bp_role</code></td>
+            <td>Defines the functional role of the Business Partner. <code>FLCU00</code> (Customer - Financial Accounting) enables G/L billing, and <code>FLCU01</code> (Customer - Sales &amp; Distribution) enables ordering and physical shipping.</td>
+            <td><code>FLCU00 (Customer)</code> / <code>FLCU01</code></td>
+          </tr>
+          <tr>
+            <td><strong>Address Form</strong></td>
+            <td><code>form_address</code></td>
+            <td>Formal title used in shipping dockets and G/L accounts receivable records.</td>
+            <td><code>Company</code></td>
+          </tr>
+          <tr>
+            <td><strong>Name</strong></td>
+            <td><code>name</code></td>
+            <td>Legal name of the business partner organization. For customers, it is <code>1 Elbe Cycle ###</code> and for vendors, it is <code>1 MagdePedal Tech ###</code>.</td>
+            <td><code>1 Elbe Cycle ###</code> / <code>1 MagdePedal Tech ###</code></td>
+          </tr>
+          <tr>
+            <td><strong>Street</strong></td>
+            <td><code>street</code></td>
+            <td>Registered street address of the customer's corporate office or warehouse facility.</td>
+            <td><code>Main Street</code></td>
+          </tr>
+          <tr>
+            <td><strong>House Number</strong></td>
+            <td><code>house_num</code></td>
+            <td>Building address number of the partner's headquarters.</td>
+            <td><code>7</code></td>
+          </tr>
+          <tr>
+            <td><strong>City</strong></td>
+            <td><code>city</code></td>
+            <td>Physical city location of the customer, used by ERP to calculate regional sales tax and route freight.</td>
+            <td><code>Magdeburg</code></td>
+          </tr>
+          <tr>
+            <td><strong>Postal Code</strong></td>
+            <td><code>postal_code</code></td>
+            <td>Geographic area mailing code of the wholesale customer.</td>
+            <td><code>39106</code></td>
+          </tr>
+          <tr>
+            <td><strong>Country/Region</strong></td>
+            <td><code>country</code></td>
+            <td>Two-character ISO code representing the partner's legal country of jurisdiction. Controls tax compliance.</td>
+            <td><code>DE</code></td>
+          </tr>
+          <tr>
+            <td><strong>Region</strong></td>
+            <td><code>region</code></td>
+            <td>German federal state code representing Saxony-Anhalt (15), used for regional commercial grouping.</td>
+            <td><code>15 (Saxony-Anhalt)</code></td>
+          </tr>
+          <tr>
+            <td><strong>Language</strong></td>
+            <td><code>language</code></td>
+            <td>Standard language code used for print output documents (invoices, shipping notes).</td>
+            <td><code>DE</code></td>
+          </tr>
+          <tr>
+            <td><strong>Search Term 1</strong></td>
+            <td><code>search_term</code></td>
+            <td>Concise 10-character keyword used to search for the master record on shared ERP databases.</td>
+            <td><code>###</code> (Your 3-digit student ID)</td>
+          </tr>
+          <tr>
+            <td><strong>Transportation Zone</strong></td>
+            <td><code>trans_zone</code></td>
+            <td>Freight delivery band representing regional distance criteria for calculating transit times.</td>
+            <td><code>Area North</code></td>
+          </tr>
+          <tr>
+            <td><strong>Company Code</strong></td>
+            <td><code>company_code</code></td>
+            <td>The highest structural unit in financial accounting. <code>DE00</code> represents the legal German subsidiary (Global Bike Germany GmbH).</td>
+            <td><code>DE00</code></td>
+          </tr>
+          <tr>
+            <td><strong>Reconciliation Account</strong></td>
+            <td><code>recon_account</code></td>
+            <td>Aggregating G/L balance sheet account. Account <code>12000000</code> groups domestic Trade Receivables, while account <code>30000000</code> groups supplier Trade Payables.</td>
+            <td><code>12000000</code> / <code>30000000</code></td>
+          </tr>
+          <tr>
+            <td><strong>Sort Key</strong></td>
+            <td><code>sort_key</code></td>
+            <td>Rules mapping how transactions are sorted in accounting reports. <code>001</code> sorts items by Posting Date.</td>
+            <td><code>001</code></td>
+          </tr>
+          <tr>
+            <td><strong>Payment Term</strong></td>
+            <td><code>payment_term</code></td>
+            <td>Agreed timeline for financial payment. Code <code>0001</code> specifies that payment is due immediately, net.</td>
+            <td><code>0001</code></td>
+          </tr>
+          <tr>
+            <td><strong>Product Template (Basic)</strong></td>
+            <td><code>temp_basic</code></td>
+            <td>Pre-existing product master record (<code>DXTR1###</code> Black Deluxe Touring Bike) used as a template to copy baseline physical data.</td>
+            <td><code>DXTR1###</code></td>
+          </tr>
+          <tr>
+            <td><strong>Product Template (Endur)</strong></td>
+            <td><code>temp_endurance</code></td>
+            <td>Pre-existing product master record (<code>DXTR2###</code> Silver Deluxe Touring Bike) used as a template.</td>
+            <td><code>DXTR2###</code></td>
+          </tr>
+          <tr>
+            <td><strong>New Basic Bike ID</strong></td>
+            <td><code>gcbk1_id</code></td>
+            <td>Unique material catalog code representing the new Basic Sport &amp; Commute bicycle product.</td>
+            <td><code>GCBK1###</code></td>
+          </tr>
+          <tr>
+            <td><strong>Basic Bike Description</strong></td>
+            <td><code>gcbk1_desc</code></td>
+            <td>Detailed commercial product name cataloged in the ERP master record.</td>
+            <td><code>Global Basic Sport &amp; Commute Bike</code></td>
+          </tr>
+          <tr>
+            <td><strong>New Endurance Bike ID</strong></td>
+            <td><code>gcbk2_id</code></td>
+            <td>Unique material catalog code representing the new Endurance Road bicycle product.</td>
+            <td><code>GCBK2###</code></td>
+          </tr>
+          <tr>
+            <td><strong>Endurance Description</strong></td>
+            <td><code>gcbk2_desc</code></td>
+            <td>Detailed commercial product name cataloged in the master record.</td>
+            <td><code>Global Endurance Road Bike</code></td>
+          </tr>
+          <tr>
+            <td><strong>New Carbon Bike ID</strong></td>
+            <td><code>gcbk3_id</code></td>
+            <td>Unique material catalog code representing the custom hand-built Carbon bicycle product.</td>
+            <td><code>GCBK3###</code></td>
+          </tr>
+          <tr>
+            <td><strong>Carbon Bike Description</strong></td>
+            <td><code>gcbk3_desc</code></td>
+            <td>Detailed commercial product name cataloged in the master record.</td>
+            <td><code>Global Carbon Custom Bike</code></td>
+          </tr>
+          <tr>
+            <td><strong>Basic Inventory Price</strong></td>
+            <td><code>price_basic</code></td>
+            <td>Standard asset valuation per unit stored in the Material Master for basic bikes.</td>
+            <td><code>1058</code></td>
+          </tr>
+          <tr>
+            <td><strong>Endurance Inventory Price</strong></td>
+            <td><code>price_endurance</code></td>
+            <td>Standard asset valuation per unit stored in the Material Master for endurance bikes.</td>
+            <td><code>2133</code></td>
+          </tr>
+          <tr>
+            <td><strong>Carbon Inventory Price</strong></td>
+            <td><code>price_carbon</code></td>
+            <td>Standard asset valuation per unit stored in the Material Master for carbon custom bikes.</td>
+            <td><code>2633</code></td>
+          </tr>
+          <tr>
+            <td><strong>Sales Organization</strong></td>
+            <td><code>sales_org</code></td>
+            <td>Organizational unit responsible for negotiating wholesale terms and selling bicycles in Germany.</td>
+            <td><code>DS00</code></td>
+          </tr>
+          <tr>
+            <td><strong>GCBK1### Price (EUR)</strong></td>
+            <td><code>price_gcbk1</code></td>
+            <td>Standard wholesale selling price negotiated for basic bikes.</td>
+            <td><code>1500</code></td>
+          </tr>
+          <tr>
+            <td><strong>GCBK2### Price (EUR)</strong></td>
+            <td><code>price_gcbk2</code></td>
+            <td>Standard wholesale selling price negotiated for endurance road bikes.</td>
+            <td><code>3500</code></td>
+          </tr>
+          <tr>
+            <td><strong>GCBK3### Price (EUR)</strong></td>
+            <td><code>price_gcbk3</code></td>
+            <td>Standard wholesale selling price negotiated for premium carbon custom bikes.</td>
+            <td><code>4000</code></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3 style="margin-top: 24px; color: var(--primary); border-bottom: 2px solid #f1f5f9; padding-bottom: 6px;">📄 Tab 4: Materials Management Setup</h3>
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 25%;">Field Name</th>
+            <th style="width: 20%;">Field Key</th>
+            <th style="width: 35%;">Real-Life Business Context &amp; Meaning</th>
+            <th style="width: 20%;">Required Value / Pattern</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Standard Price (EUR)</strong></td>
+            <td><code>price_std</code></td>
+            <td>Inventory asset value per unit assigned to purchased raw accessories in the Material Master.</td>
+            <td><code>150</code></td>
+          </tr>
+          <tr>
+            <td><strong>Base Unit of Measure</strong></td>
+            <td><code>uom</code></td>
+            <td>Physical baseline counting unit for inventory tracking. <code>PC</code> stands for pieces.</td>
+            <td><code>PC</code></td>
+          </tr>
+          <tr>
+            <td><strong>Material Group</strong></td>
+            <td><code>mat_group</code></td>
+            <td>Categorization code used to group raw component materials for reporting and capacity scheduling.</td>
+            <td><code>UTILITY</code></td>
+          </tr>
+          <tr>
+            <td><strong>Delivering Plant</strong></td>
+            <td><code>plant</code></td>
+            <td>The production facility or warehouse location where the raw components are received and registered.</td>
+            <td><code>HD00</code></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3 style="margin-top: 24px; color: var(--primary); border-bottom: 2px solid #f1f5f9; padding-bottom: 6px;">📄 Tab 5: Sales and Distribution (Pre-Sales &amp; Orders)</h3>
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 25%;">Field Name</th>
+            <th style="width: 20%;">Field Key</th>
+            <th style="width: 35%;">Real-Life Business Context &amp; Meaning</th>
+            <th style="width: 20%;">Required Value / Pattern</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Sales Inquiry Type</strong></td>
+            <td><code>inq_type</code></td>
+            <td>Pre-sales document type code. <code>IN</code> stands for standard non-binding Sales Inquiry.</td>
+            <td><code>IN</code></td>
+          </tr>
+          <tr>
+            <td><strong>GCBK1### Quantity</strong></td>
+            <td><code>qty_gcbk1</code></td>
+            <td>Number of basic bikes ordered by the customer (Elbe Cycle) in the pre-sales inquiries.</td>
+            <td><code>5</code></td>
+          </tr>
+          <tr>
+            <td><strong>GCBK2### Quantity</strong></td>
+            <td><code>qty_gcbk2</code></td>
+            <td>Number of endurance road bikes ordered by the customer in the pre-sales inquiries.</td>
+            <td><code>2</code></td>
+          </tr>
+          <tr>
+            <td><strong>GCBK3### Quantity</strong></td>
+            <td><code>qty_gcbk3</code></td>
+            <td>Number of carbon custom bikes ordered by the customer in the pre-sales inquiries.</td>
+            <td><code>1</code></td>
+          </tr>
+          <tr>
+            <td><strong>Valid To Date</strong></td>
+            <td><code>valid_to</code></td>
+            <td>Expiration date of the pricing and discount offers specified in the quotation.</td>
+            <td><code>1 Month from now</code></td>
+          </tr>
+          <tr>
+            <td><strong>Reference Inquiry ID</strong></td>
+            <td><code>ref_inquiry</code></td>
+            <td>Prior Inquiry document number used to copy all terms and partner details over to the Quotation.</td>
+            <td>E.g., <code>100000045</code></td>
+          </tr>
+          <tr>
+            <td><strong>Quotation Type</strong></td>
+            <td><code>quot_type</code></td>
+            <td>Document classification code. <code>QT</code> represents a legally binding Quotation.</td>
+            <td><code>QT</code></td>
+          </tr>
+          <tr>
+            <td><strong>Sales Order Type</strong></td>
+            <td><code>so_type</code></td>
+            <td>Document classification code. <code>OR</code> represents a standard Wholesale Sales Order.</td>
+            <td><code>OR</code></td>
+          </tr>
+          <tr>
+            <td><strong>Reference Quotation ID</strong></td>
+            <td><code>ref_quotation</code></td>
+            <td>Prior Quotation document number used to copy binding conditions over to the Sales Order.</td>
+            <td>E.g., <code>200000045</code></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3 style="margin-top: 24px; color: var(--primary); border-bottom: 2px solid #f1f5f9; padding-bottom: 6px;">📄 Tab 6: Production Planning Setup</h3>
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 25%;">Field Name</th>
+            <th style="width: 20%;">Field Key</th>
+            <th style="width: 35%;">Real-Life Business Context &amp; Meaning</th>
+            <th style="width: 20%;">Required Value / Pattern</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Routing Group Title</strong></td>
+            <td><code>routing_title</code></td>
+            <td>Group ID defining the manufacturing sequence of work center operations required to assemble bikes.</td>
+            <td><code>GCBK1###-HD</code></td>
+          </tr>
+          <tr>
+            <td><strong>Delivering Plant</strong></td>
+            <td><code>plant</code></td>
+            <td>Shop floor plant where routing work center operations are executed.</td>
+            <td><code>HD00</code></td>
+          </tr>
+          <tr>
+            <td><strong>Product Group ID</strong></td>
+            <td><code>pg_id</code></td>
+            <td>Category code grouping materials together for aggregate inventory forecasting.</td>
+            <td><code>PG-GCBK###</code></td>
+          </tr>
+          <tr>
+            <td><strong>Description</strong></td>
+            <td><code>pg_desc</code></td>
+            <td>Text describing the newly created product group.</td>
+            <td><code>Sport &amp; Commute Bikes ###</code></td>
+          </tr>
+          <tr>
+            <td><strong>Members</strong></td>
+            <td><code>pg_members</code></td>
+            <td>Comma-separated list of individual product IDs included in the product group.</td>
+            <td><code>GCBK1###, GCBK2###</code></td>
+          </tr>
+          <tr>
+            <td><strong>Forecast Quantity</strong></td>
+            <td><code>forecast_qty</code></td>
+            <td>Aggregate target quantity planned for manufacturing during the forecast period.</td>
+            <td><code>100</code></td>
+          </tr>
+          <tr>
+            <td><strong>Strategy Group Basic/Endur</strong></td>
+            <td><code>strat_40</code></td>
+            <td>Planning Strategy <code>40</code> (Make-to-Stock / MTS), triggering raw components procurement based on forecasts.</td>
+            <td><code>40</code></td>
+          </tr>
+          <tr>
+            <td><strong>Strategy Group Carbon</strong></td>
+            <td><code>strat_20</code></td>
+            <td>Planning Strategy <code>20</code> (Make-to-Order / MTO), locking custom carbon assembly to trigger only upon Sales Order.</td>
+            <td><code>20</code></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3 style="margin-top: 24px; color: var(--primary); border-bottom: 2px solid #f1f5f9; padding-bottom: 6px;">📄 Tab 7: Material Requirements Plan (MRP)</h3>
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 25%;">Field Name</th>
+            <th style="width: 20%;">Field Key</th>
+            <th style="width: 35%;">Real-Life Business Context &amp; Meaning</th>
+            <th style="width: 20%;">Required Value / Pattern</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Material / Product Group</strong></td>
+            <td><code>target</code></td>
+            <td>The material code or product group ID targeted for MRP calculation to identify component shortfalls.</td>
+            <td><code>PG-GCBK###</code></td>
+          </tr>
+          <tr>
+            <td><strong>Delivering Plant</strong></td>
+            <td><code>plant</code></td>
+            <td>The production facility where the inventory shortage calculation is executed.</td>
+            <td><code>HD00</code></td>
+          </tr>
+          <tr>
+            <td><strong>Confirm Action</strong></td>
+            <td><code>status</code></td>
+            <td>Action confirmation signifying the ERP MRP planning run was completed successfully.</td>
+            <td><code>Completed</code></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3 style="margin-top: 24px; color: var(--primary); border-bottom: 2px solid #f1f5f9; padding-bottom: 6px;">📄 Tab 8: Procurement Process (MM)</h3>
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 25%;">Field Name</th>
+            <th style="width: 20%;">Field Key</th>
+            <th style="width: 35%;">Real-Life Business Context &amp; Meaning</th>
+            <th style="width: 20%;">Required Value / Pattern</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>RFQ Type</strong></td>
+            <td><code>rfq_type</code></td>
+            <td>Document classification code. <code>AN</code> represents standard vendor Request for Quotation.</td>
+            <td><code>AN</code></td>
+          </tr>
+          <tr>
+            <td><strong>Collective Number</strong></td>
+            <td><code>coll_num</code></td>
+            <td>Multi-character reference tag used to group multiple supplier RFQs together for comparative cost analysis.</td>
+            <td><code>COLL###</code></td>
+          </tr>
+          <tr>
+            <td><strong>RFQ Quantity</strong></td>
+            <td><code>quantity</code></td>
+            <td>Physical material quantity requested from the external supplier.</td>
+            <td><code>100</code> / <code>5</code></td>
+          </tr>
+          <tr>
+            <td><strong>Supplier</strong></td>
+            <td><code>supplier</code></td>
+            <td>The supplier master record name selected to receive the RFQ or Purchase Order.</td>
+            <td><code>1 MagdePedal Tech ###</code></td>
+          </tr>
+          <tr>
+            <td><strong>Unit Price (EUR)</strong></td>
+            <td><code>price</code></td>
+            <td>Negotiated price per unit offered by the supplier.</td>
+            <td><code>130</code></td>
+          </tr>
+          <tr>
+            <td><strong>Reference RFQ ID</strong></td>
+            <td><code>ref_rfq</code></td>
+            <td>Prior RFQ document number used as a reference to log the supplier's quotation bid.</td>
+            <td>E.g., <code>600000045</code></td>
+          </tr>
+          <tr>
+            <td><strong>Reference Purchase Order</strong></td>
+            <td><code>ref_po</code></td>
+            <td>Prior Purchase Order ID referenced to verify goods receipt quantities and supplier invoice values.</td>
+            <td>E.g., <code>450000045</code></td>
+          </tr>
+          <tr>
+            <td><strong>Delivery Note / Ref Doc</strong></td>
+            <td><code>delivery_note</code></td>
+            <td>External document ID assigned by the supplier to the shipping docket (used for goods matching).</td>
+            <td>E.g., <code>DN-###</code></td>
+          </tr>
+          <tr>
+            <td><strong>Goods Movement Type</strong></td>
+            <td><code>movement</code></td>
+            <td>Three-digit key controlling physical inventory transactions. <code>561</code> initializes stock; <code>101</code> posts goods receipt.</td>
+            <td><code>101</code> / <code>561</code></td>
+          </tr>
+          <tr>
+            <td><strong>Storage Location</strong></td>
+            <td><code>storage_loc</code></td>
+            <td>Warehouse subdivision where stocks are held. <code>TG00</code> is Trading Goods; <code>RM00</code> is Raw Materials.</td>
+            <td><code>TG00</code> / <code>RM00</code></td>
+          </tr>
+          <tr>
+            <td><strong>Supplier Invoice Number</strong></td>
+            <td><code>invoice_num</code></td>
+            <td>External billing number assigned by the supplier to register accounts payable.</td>
+            <td>E.g., <code>INV-###</code></td>
+          </tr>
+          <tr>
+            <td><strong>Supplier Invoice Amount</strong></td>
+            <td><code>invoice_amt</code></td>
+            <td>Total gross payable amount invoiced by the supplier (Quantity * Unit Price).</td>
+            <td><code>13000</code></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3 style="margin-top: 24px; color: var(--primary); border-bottom: 2px solid #f1f5f9; padding-bottom: 6px;">📄 Tab 9: Production Execution (PP)</h3>
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 25%;">Field Name</th>
+            <th style="width: 20%;">Field Key</th>
+            <th style="width: 35%;">Real-Life Business Context &amp; Meaning</th>
+            <th style="width: 20%;">Required Value / Pattern</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Planned Order ID</strong></td>
+            <td><code>planned_order</code></td>
+            <td>Temporary planning document generated by MRP during material shortages.</td>
+            <td>E.g., generated PO ID</td>
+          </tr>
+          <tr>
+            <td><strong>Production Order ID</strong></td>
+            <td><code>prod_order</code></td>
+            <td>Official shop floor authorization document released to assemble the bicycles.</td>
+            <td>E.g., <code>10000045</code></td>
+          </tr>
+          <tr>
+            <td><strong>Yield to Confirm</strong></td>
+            <td><code>yield_qty</code></td>
+            <td>Number of successfully manufactured, defect-free final products completed on the shop floor.</td>
+            <td><code>3</code> / <code>2</code></td>
+          </tr>
+          <tr>
+            <td><strong>Settlement Rule</strong></td>
+            <td><code>settle_rule</code></td>
+            <td>Cost controlling rule directing ERP how to allocate actual variance cost balances back to the G/L.</td>
+            <td><code>ORD (Order)</code></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3 style="margin-top: 24px; color: var(--primary); border-bottom: 2px solid #f1f5f9; padding-bottom: 6px;">📄 Tab 10: Sales Fulfillment &amp; Settlement</h3>
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 25%;">Field Name</th>
+            <th style="width: 20%;">Field Key</th>
+            <th style="width: 35%;">Real-Life Business Context &amp; Meaning</th>
+            <th style="width: 20%;">Required Value / Pattern</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Picked Qty GCBK1###</strong></td>
+            <td><code>pick_gcbk1</code></td>
+            <td>Physical quantity of basic bikes fetched from warehouse shelves at Heidelberg for customer dispatch.</td>
+            <td><code>5</code></td>
+          </tr>
+          <tr>
+            <td><strong>Picked Qty GCBK2###</strong></td>
+            <td><code>pick_gcbk2</code></td>
+            <td>Physical quantity of endurance road bikes fetched from warehouse shelves for customer dispatch.</td>
+            <td><code>2</code></td>
+          </tr>
+          <tr>
+            <td><strong>Picked Qty GCBK3###</strong></td>
+            <td><code>pick_gcbk3</code></td>
+            <td>Physical quantity of carbon custom bikes fetched from warehouse shelves for customer dispatch.</td>
+            <td><code>1</code></td>
+          </tr>
+          <tr>
+            <td><strong>Outbound Delivery ID</strong></td>
+            <td><code>ref_delivery</code></td>
+            <td>The Outbound Delivery document ID referenced to execute picking, post goods issue, and billing.</td>
+            <td>E.g., <code>800000045</code></td>
+          </tr>
+          <tr>
+            <td><strong>Shipping Point</strong></td>
+            <td><code>shipping_point</code></td>
+            <td>Location from which physical goods are shipped. Heidelberg plant shipping point <code>HD00</code>.</td>
+            <td><code>HD00</code></td>
+          </tr>
+          <tr>
+            <td><strong>Clearing Amount (EUR)</strong></td>
+            <td><code>clear_amt</code></td>
+            <td>Total financial currency processed to clear accounts receivable balances after payment.</td>
+            <td>Standard invoice total</td>
+          </tr>
+          <tr>
+            <td><strong>Bank Account</strong></td>
+            <td><code>bank_acct</code></td>
+            <td>General Ledger cash asset account representing bank checking assets.</td>
+            <td><code>10000000</code></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Card 6: Import / Export Instructions -->
+    <div class="card" style="border-left: 4px solid var(--primary);">
+      <h2>🚀 Quick Guide: Importing and Synchronizing</h2>
+      <ol>
+        <li>Fill out your parameters in the worksheets offline. Remember to replace all instances of <code>###</code> with your assigned student ID.</li>
+        <li>Open the web-based <strong>ERP Logistics Simulator</strong>.</li>
+        <li>Click the <strong>Import File</strong> button in the top menu and select your Excel workbook.</li>
+        <li>The system automatically parses all tabs, loads all entered values, and synchronizes your progress, so you can pick up exactly where you left off.</li>
+      </ol>
+    </div>
+
+  </div>
+
+</body>
+</html>

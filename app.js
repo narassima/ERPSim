@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", () => {
+﻿document.addEventListener("DOMContentLoaded", () => {
   // Bind UI Elements
   const studentIdInput = document.getElementById("student-id-input");
   const stepsNav = document.getElementById("steps-nav-container");
@@ -742,14 +742,14 @@ document.addEventListener("DOMContentLoaded", () => {
               isRefCorrect = val === refVal;
             }
 
-            // Standard match checks — only strict for SAP code fields
+            // Standard match checks â€” only strict for SAP code fields
             let isStandardMatch = true;
             if (expectedVal && !f.placeholder && f.name !== "status" && !f.name.startsWith("ref_") && f.name !== "prod_order") {
               if (isSapCode(f, expectedVal)) {
                 // SAP code: must match exactly (case-insensitive)
                 isStandardMatch = val.toLowerCase() === expectedVal.toLowerCase();
               }
-              // else: free-text field — any non-empty value is accepted (already checked by !val above)
+              // else: free-text field â€” any non-empty value is accepted (already checked by !val above)
             }
 
             if (!val || !isRefCorrect || !isStandardMatch) {
@@ -772,9 +772,9 @@ document.addEventListener("DOMContentLoaded", () => {
             if (lbl) invalidLabels.push(`"${lbl.textContent.trim()}"`);
           }
         });
-        const fieldList = invalidLabels.length ? ` — check: ${invalidLabels.join(", ")}` : "";
+        const fieldList = invalidLabels.length ? ` â€” check: ${invalidLabels.join(", ")}` : "";
         feedback.className = "feedback-box error";
-        feedback.innerHTML = `❌ <strong>Validation Failed!</strong> Some fields are blank or contain incorrect SAP codes${fieldList}. <br><small>💡 SAP code fields (marked with <strong>🔑 Required SAP code</strong>) must be entered exactly as shown. Free-text fields accept any value. Click <strong>Autofill Defaults</strong> if you are stuck.</small>`;
+        feedback.innerHTML = `âŒ <strong>Validation Failed!</strong> Some fields are blank or contain incorrect SAP codes${fieldList}. <br><small>ðŸ’¡ SAP code fields (marked with <strong>ðŸ”‘ Required SAP code</strong>) must be entered exactly as shown. Free-text fields accept any value. Click <strong>Autofill Defaults</strong> if you are stuck.</small>`;
         return;
       }
 
@@ -813,7 +813,7 @@ document.addEventListener("DOMContentLoaded", () => {
       else if (step.number === 51) generatedMsg = `Billing Document Customer Invoice #950000${sId}${countStr} posted.`;
       else if (step.number === 53) generatedMsg = `Incoming Payment IP-8000${sId}${countStr} cleared. Cycle completed!`;
 
-      feedback.innerHTML = `🎉 <strong>Success!</strong> ${generatedMsg} Progress saved.`;
+      feedback.innerHTML = `ðŸŽ‰ <strong>Success!</strong> ${generatedMsg} Progress saved.`;
       
       renderSidebar();
 
@@ -843,15 +843,15 @@ document.addEventListener("DOMContentLoaded", () => {
     if (field.name.startsWith("ref_") || field.name === "prod_order" || field.name === "planned_order") return false;
     // Status / placeholder-only fields are free text
     if (field.name === "status" || field.placeholder) return false;
-    // No value defined → can't be a code
+    // No value defined â†’ can't be a code
     if (!resolvedValue) return false;
     // Purely numeric values are free-entry quantities / prices / dates
     if (/^\d+(\.\d+)?$/.test(resolvedValue)) return false;
     // Values with spaces are free-text (names, descriptions, addresses, etc.)
     if (resolvedValue.includes(" ")) return false;
-    // Values containing ### are student-specific IDs → we validate those strictly
+    // Values containing ### are student-specific IDs â†’ we validate those strictly
     // (they already replace ### with the student ID so no spaces will be present)
-    // Short alphanumeric codes (≤ 20 chars, no spaces): treat as SAP code
+    // Short alphanumeric codes (â‰¤ 20 chars, no spaces): treat as SAP code
     if (resolvedValue.length <= 20) return true;
     // Long values are free text
     return false;
@@ -924,12 +924,12 @@ document.addEventListener("DOMContentLoaded", () => {
       } else if (isRef && f.placeholder) {
         hintHtml = `<span style="font-size: 0.72rem; color: var(--warning); font-weight: 600; margin-top: 4px; display: block;">
           <span class="material-symbols-outlined" style="font-size: 12px; vertical-align: middle;">history_edu</span>
-          ${f.placeholder} — enter the ID you recorded
+          ${f.placeholder} â€” enter the ID you recorded
         </span>`;
       } else if (!isCode && !isRef && !f.readonly && expectedVal) {
         hintHtml = `<span style="font-size: 0.72rem; color: var(--text-muted); margin-top: 4px; display: block;">
           <span class="material-symbols-outlined" style="font-size: 12px; vertical-align: middle;">edit_note</span>
-          Example: <em>${expectedVal}</em> &nbsp;(free entry — type your own value)
+          Example: <em>${expectedVal}</em> &nbsp;(free entry â€” type your own value)
         </span>`;
       }
       
@@ -1157,68 +1157,251 @@ document.addEventListener("DOMContentLoaded", () => {
   // Fire it up
   init();
 
+
   function renderBusinessFlowPage() {
     const main = document.getElementById("main-content-panel");
     const docs = ERPdb.state.documents;
     const sId = ERPdb.state.studentId || "000";
-    
+
     const pipelines = [
       {
         title: "Procure-to-Pay (Materials Management)",
         icon: "local_shipping",
         nodes: [
-          { name: "Perform MRP", step: 13, out: "MRP Run complete", desc: "Material Requirements Planning execution.", app: "MD01N - MRP Live", input: "Plant MU10" },
-          { name: "Convert PR", step: 15, out: docs.purchaseRequisition, desc: "Convert planned order to purchase requisition.", app: "Convert Planned Orders", input: "Material XM10###" },
-          { name: "Create Vendor", step: 16, out: docs.vendorId, desc: "Setup external supplier master data.", app: "Maintain Business Partner", input: "Vendor details" },
-          { name: "Create RFQ", step: 17, out: docs.vendorRfq, desc: "Request for quotation from supplier.", app: "Create RFQ", input: "Material, Quantity" },
-          { name: "Vendor Quotation", step: 18, out: docs.vendorQuotation, desc: "Supplier's price offer.", app: "Maintain Quotation", input: "Price 130 EUR" },
-          { name: "Purchase Order", step: 20, out: docs.purchaseOrder, desc: "Legal binding contract to purchase.", app: "Create Purchase Order", input: "Ref Quotation #" },
-          { name: "Goods Receipt", step: 22, out: docs.goodsReceiptPo, desc: "Physical receipt into warehouse.", app: "Post Goods Receipt for PO", input: "PO #, Sloc RM10" },
-          { name: "Supplier Invoice", step: 25, out: docs.supplierInvoice, desc: "Financial liability recorded.", app: "Create Incoming Invoice", input: "PO #, Amount" },
-          { name: "Payment", step: 28, out: docs.outgoingPayment, desc: "Clearing Accounts Payable.", app: "Post Outgoing Payments", input: "Bank 18100999" }
+          {
+            name: "Perform MRP", step: 13, out: "MRP Run complete",
+            app: "MD01N - MRP Live",
+            context: "Material Requirements Planning (MRP) is the brain of the supply chain. It scans all sales demands, production forecasts (PIRs), and current stock levels across the plant, then automatically calculates which components are short and when they need to be ordered or produced.",
+            inputDetails: ["Plant: MU10 (Munich)", "Planning parameters: NETCH (net change)", "Scope: XM10, XM20, ZC10 materials", "Automatic PR creation flag: enabled"],
+            outputDetails: ["Planned orders for raw materials and components", "Purchase Requisitions (PRs) for externally sourced items like ZC10", "The system identifies a shortfall of 100 pcs of ZC10 and creates a PR automatically"],
+            whyItMatters: "Without MRP, supply chain planning is manual and error-prone. MRP ensures that the right quantity of materials arrives at exactly the right time, preventing stock-outs on the production floor and excess capital locked up in inventory.",
+            nextStep: 15
+          },
+          {
+            name: "Convert PR", step: 15, out: docs.purchaseRequisition,
+            app: "Convert Planned Orders",
+            context: "A Purchase Requisition (PR) is an internal document raised by the production/planning team to formally request that the purchasing department procure a specific item. Converting a planned order into a PR is the handoff from Production Planning (PP) to Materials Management (MM).",
+            inputDetails: ["Planned order number from MRP run", "Material: ZC10" + sId + " (Zenith Integrated Ride Computer)", "Quantity: 100 pcs", "Plant: MU10"],
+            outputDetails: ["Purchase Requisition document (PR#) created", "PR triggers the purchasing workflow - buyers are notified to source the material", "PR number is referenced in all subsequent procurement documents"],
+            whyItMatters: "The PR creates a formal, auditable internal request. In large corporations, this segregates duties: production decides what to buy, while procurement decides from whom and at what price. This separation prevents unauthorized purchasing.",
+            nextStep: 16
+          },
+          {
+            name: "Create Vendor", step: 16, out: docs.vendorId,
+            app: "Maintain Business Partner",
+            context: "Before the company can issue a Purchase Order, the supplier must exist as a Business Partner (Vendor) in the ERP system. Vendor master data stores the supplier name, address, bank details, payment terms, and purchasing organization assignments.",
+            inputDetails: ["Vendor name: AlpineGear Solutions", "BP Role: FLVN00 (Vendor)", "Company Code: ZN00", "Payment terms: negotiated credit terms", "Reconciliation Account: 21100999 (Trade Payables)"],
+            outputDetails: ["Vendor ID: SUPP-" + sId + " created in the system", "Vendor is now available as a purchase order recipient", "Accounts Payable sub-ledger is linked via reconciliation account"],
+            whyItMatters: "Vendor master data is the foundation of the entire procurement cycle. All purchase orders, goods receipts, and invoices flow through this vendor record. Without it, no payment can be processed and no legal purchasing contract can be generated.",
+            nextStep: 17
+          },
+          {
+            name: "Create RFQ", step: 17, out: docs.vendorRfq,
+            app: "Create RFQ (ME41)",
+            context: "A Request for Quotation (RFQ) is a formal invitation sent to one or more suppliers, asking them to submit a price offer for a specific material and quantity. In competitive procurement, multiple vendors receive the same RFQ so their bids can be compared.",
+            inputDetails: ["Material: ZC10" + sId + " (Zenith Integrated Ride Computer)", "Quantity: 100 pcs", "Delivery date: negotiated", "Vendor: SUPP-" + sId + " (AlpineGear Solutions)", "Purchasing Organization: ZN00"],
+            outputDetails: ["RFQ document number created", "RFQ is transmitted to the vendor (AlpineGear Solutions)", "RFQ opens the quotation workflow for the vendor to respond"],
+            whyItMatters: "RFQs enforce competitive sourcing, ensuring the company gets the best market price. They are legally significant as the vendor response becomes a binding quotation. Skipping RFQs can lead to audit findings and procurement policy violations.",
+            nextStep: 18
+          },
+          {
+            name: "Vendor Quotation", step: 18, out: docs.vendorQuotation,
+            app: "Maintain Quotation (ME47)",
+            context: "The vendor price response is entered into the system as a Quotation. This captures the supplier offered price per unit, delivery lead time, and any discount conditions. When multiple vendors respond, the Price Comparison (ME49) report ranks them by net value.",
+            inputDetails: ["Reference RFQ number", "Vendor: SUPP-" + sId, "Offered price: 130 EUR per unit", "Delivery lead time: as agreed", "Currency: EUR"],
+            outputDetails: ["Quotation document number created", "Price comparison list (ME49) is now ready to evaluate bids", "Selected quotation becomes the basis for the Purchase Order"],
+            whyItMatters: "Quotation management is the competitive heart of procurement. The 130 EUR unit price agreed here directly determines the cost of goods and impacts the company gross margin. This data feeds directly into the accounts payable forecast.",
+            nextStep: 20
+          },
+          {
+            name: "Purchase Order", step: 20, out: docs.purchaseOrder,
+            app: "Create Purchase Order (ME21N)",
+            context: "A Purchase Order (PO) is a legally binding commercial document issued by the buyer to the vendor, confirming the agreed quantity, price, and delivery terms. In ERP, it is created with reference to the approved quotation, automatically copying all pricing and conditions.",
+            inputDetails: ["Reference Quotation: " + (docs.vendorQuotation || "from Step 18"), "Material: ZC10" + sId, "Quantity: 100 pcs", "Price: 130 EUR/pc (Total: 13,000 EUR)", "Vendor: SUPP-" + sId, "Delivery Plant: MU10"],
+            outputDetails: ["Purchase Order #" + (docs.purchaseOrder || "450000" + sId) + " created", "PO is transmitted to AlpineGear Solutions", "Goods Receipt and Invoice can now be posted against this PO number"],
+            whyItMatters: "The PO is the central document of MM procurement. Every downstream transaction - goods receipt, invoice verification, and payment - references this one PO. It provides the 3-way match anchor: PO quantity vs GR quantity vs Invoice amount.",
+            nextStep: 22
+          },
+          {
+            name: "Goods Receipt", step: 22, out: docs.goodsReceiptPo,
+            app: "Post Goods Receipt for PO (MIGO)",
+            context: "When the physical goods arrive at the warehouse dock, the warehouse worker posts a Goods Receipt (GR) against the PO. This is the moment the company legally takes ownership of the goods. The system automatically updates inventory stock, creates a material document, and credits the GR/IR clearing account.",
+            inputDetails: ["Reference PO: " + (docs.purchaseOrder || "450000" + sId), "Material: ZC10" + sId, "Quantity received: 100 pcs", "Storage Location: RM10 (Raw Materials)", "Movement Type: 101 (GR for PO)"],
+            outputDetails: ["Material Document created - stock updated from 0 to 100 pcs", "Accounting: Dr. Inventory Account / Cr. GR/IR Clearing Account", "PO history is updated with the goods receipt posting"],
+            whyItMatters: "The Goods Receipt is a critical financial event. It creates an accounting entry that increases asset value on the balance sheet (inventory). The 3-way match between PO, GR, and Invoice is a fundamental internal control that prevents fraudulent payments.",
+            nextStep: 25
+          },
+          {
+            name: "Supplier Invoice", step: 25, out: docs.supplierInvoice,
+            app: "Create Incoming Invoice (MIRO)",
+            context: "Invoice Verification matches the supplier invoice amount against the Purchase Order price and the Goods Receipt quantity. If all three match (3-way match), the system posts the invoice and creates a liability in Accounts Payable. If they do not match, a blocking indicator is set for manual review.",
+            inputDetails: ["Reference PO: " + (docs.purchaseOrder || "450000" + sId), "Invoice amount: 13,000 EUR (100 pcs x 130 EUR)", "Invoice date: current date", "Tax code: as applicable"],
+            outputDetails: ["Invoice document posted to Accounts Payable", "Accounting: Dr. GR/IR Clearing / Cr. Vendor Account (SUPP-" + sId + ")", "Vendor account now shows an open payable of 13,000 EUR"],
+            whyItMatters: "Invoice verification is where finance meets procurement. The 3-way match (PO-GR-Invoice) is the company primary defense against double payments and fraud. Only invoices that match PO price and GR quantity will pass automatic posting - others get flagged for buyer review.",
+            nextStep: 28
+          },
+          {
+            name: "Payment", step: 28, out: docs.outgoingPayment,
+            app: "Post Outgoing Payments (F-53)",
+            context: "The final step of the Procure-to-Pay cycle. The accountant posts the outgoing bank payment to clear the open vendor liability created in the previous invoice step. This deducts cash from the company bank account and marks the vendor invoice as paid.",
+            inputDetails: ["Vendor: SUPP-" + sId + " (AlpineGear Solutions)", "Bank G/L Account: 18100999", "Payment amount: 13,000 EUR", "Reference invoice from Step 25"],
+            outputDetails: ["Outgoing payment document posted", "Accounting: Dr. Vendor Account / Cr. Bank Account", "Vendor balance cleared to zero - cycle complete", "Bank balance reduced by 13,000 EUR"],
+            whyItMatters: "This closes the financial loop of MM procurement. After this step, the company books show: +100 units ZC10 in inventory, -13,000 EUR in cash. The complete audit trail from PO to GR to Invoice to Payment is fully traceable in the document flow.",
+            nextStep: null
+          }
         ]
       },
       {
         title: "Plan-to-Produce (Production Planning)",
         icon: "precision_manufacturing",
         nodes: [
-          { name: "Create Routing", step: 8, out: "Routing Group Created", desc: "Define manufacturing operations sequence.", app: "Create Routing", input: "Work Centers, Times" },
-          { name: "Independent Req.", step: 10, out: "PIR Created", desc: "Forecast demand for products.", app: "Create PIRs", input: "Quantity, Month" },
-          { name: "Convert Prod. Order", step: 35, out: docs.productionOrder, desc: "Authorize manufacturing floor.", app: "Create Production Order", input: "Planned Order #" },
-          { name: "Confirm Production", step: 39, out: "Yield Confirmed", desc: "Report completed manufacturing quantities.", app: "Enter Production Order Confirmation", input: "Yield Qty" },
-          { name: "Goods Receipt (FG)", step: 41, out: docs.goodsReceiptProd, desc: "Finished goods put into stock.", app: "Goods Receipt for Order", input: "Order #, Sloc FG10" },
-          { name: "Settle Costs", step: 44, out: "Order Settled", desc: "Allocate costs to inventory or COGS.", app: "Settle Production Order", input: "Order #" }
+          {
+            name: "Create Routing", step: 8, out: "Routing Created",
+            app: "Create Routing (CA01)",
+            context: "A Routing is a step-by-step manufacturing recipe that tells the production floor exactly how to assemble a product. It lists each operation such as Frame Assembly, Wheel Fitting, and Quality Check, which work center performs it, and how long it takes in setup time and machine time.",
+            inputDetails: ["Material: XM10" + sId + " (Basic Sport and Commute Bike)", "Plant: MU10 (Munich)", "Template routing from XM-REF1-" + sId + " (Deluxe Touring Bike)", "Work centers: Assembly Line AL10, QC Station"],
+            outputDetails: ["Routing group created for XM10" + sId, "Operations defined with times: e.g. Frame Assembly 30 min, Wheel Fitting 20 min", "Routing links to Bill of Materials (BOM) via Production Version"],
+            whyItMatters: "The routing is the foundation of production cost calculation. Every minute of machine time and labor is costed against the production order using the routing. Without it, no production order can be created, and the system cannot calculate standard costs for inventory valuation.",
+            nextStep: 10
+          },
+          {
+            name: "Independent Req.", step: 10, out: "PIR Created",
+            app: "Maintain PIRs (MD61)",
+            context: "Planned Independent Requirements (PIRs) are demand forecasts entered by the production planner. They represent anticipated sales quantities that have not yet been confirmed by actual customer orders. PIRs drive the MRP run to build-to-stock inventory in advance.",
+            inputDetails: ["Product Group: PG-AV" + sId, "Plant: MU10", "Month 1 forecast: 220 units (Basic and Endurance combined)", "Month 2 forecast: 140 units", "Month 3 forecast: 160 units"],
+            outputDetails: ["PIR records created for XM10 and XM20 materials in Munich", "MRP is now triggered with these as planned demand inputs", "System will calculate required component quantities based on BOM explosion"],
+            whyItMatters: "PIRs enable Make-to-Stock production strategy (Strategy Group 40). Without forecasts, the warehouse would always be empty until a customer orders, causing long lead times. Accurate forecasting balances the risk of overproduction against stock-outs.",
+            nextStep: 35
+          },
+          {
+            name: "Convert Prod. Order", step: 35, out: docs.productionOrder,
+            app: "Create Production Order (CO40)",
+            context: "A Production Order is the formal authorization from the planning department to the shop floor to begin manufacturing. It is converted from a Planned Order generated by MRP and contains all the details needed: what to build, how many, which components to use, and which routing to follow.",
+            inputDetails: ["Planned order from MRP", "Material: XM10" + sId + " (5 units)", "Routing: XM10" + sId + "-HD", "BOM explosion: Frame, Wheels, GPS Computer ZC10, Paint", "Plant: MU10"],
+            outputDetails: ["Production Order #" + (docs.productionOrder || "10001" + sId) + " created", "Components are reserved in inventory (reservation documents)", "Order status: CRTD (Created) then Released (REL) for shop floor"],
+            whyItMatters: "The Production Order is the central document of PP. It triggers material reservations, schedules capacity at work centers, and begins cost collection. It is the legal authority for the production team to start assembly.",
+            nextStep: 39
+          },
+          {
+            name: "Confirm Production", step: 39, out: "Yield Confirmed",
+            app: "Production Order Confirmation (CO15)",
+            context: "Production Confirmation is reported by the shop floor supervisor to tell the system how many finished units were actually assembled. It records the actual machine time and labor time consumed, which are compared against the planned standard times in the routing for cost variance analysis.",
+            inputDetails: ["Production Order: " + (docs.productionOrder || "10001" + sId), "Yield quantity: 5 units completed", "Actual machine time recorded", "Scrap quantity: 0"],
+            outputDetails: ["Order status changes from REL to CNF (Confirmed - fully complete)", "Actual costs accrued to the production order", "Components (ZC10, frame, wheels) are consumed from stock (Goods Issue)"],
+            whyItMatters: "Confirmations feed actual costs into the order. The variance between planned cost from the standard routing and actual cost from confirmations reveals production efficiency. A negative variance means you produced cheaper than planned - a positive variance signals inefficiency.",
+            nextStep: 41
+          },
+          {
+            name: "Goods Receipt (FG)", step: 41, out: docs.goodsReceiptProd,
+            app: "Goods Receipt for Order (MIGO)",
+            context: "After the shop floor confirms production is complete, a Goods Receipt for Production Order moves the finished bicycles from the production floor into the Finished Goods (FG) storage location. This is the moment the finished product is officially in stock and available to fulfill customer orders.",
+            inputDetails: ["Production Order: " + (docs.productionOrder || "10001" + sId), "Material: XM10" + sId, "Quantity: 5 pcs", "Storage Location: FG10 (Finished Goods)", "Movement Type: 101 (GR for Production Order)"],
+            outputDetails: ["Stock of XM10 increases by 5 pcs in FG10", "Accounting: Dr. Inventory (Finished Goods) / Cr. Production Order (WIP)", "Production order status: GR completed"],
+            whyItMatters: "This step closes the production cost loop. Finished goods are now capitalized as inventory on the balance sheet. The 5 bikes are physically stored and logistically available for the Sales and Distribution team to pick and ship to Alpine Velo.",
+            nextStep: 44
+          },
+          {
+            name: "Settle Costs", step: 44, out: "Order Settled",
+            app: "Settle Production Order (KO88)",
+            context: "Cost Settlement is the final accounting step of the PP cycle. All costs collected on the production order (material issues, labor, and overhead) are transferred to the finished goods inventory. Any variance between actual costs and standard costs is posted to the Cost of Goods Sold (COGS) variance account.",
+            inputDetails: ["Production Order: " + (docs.productionOrder || "10001" + sId), "Settlement receiver: Material XM10 inventory", "Settlement rule: ZS10D (full variance to COGS)"],
+            outputDetails: ["Production order balance cleared to zero", "Variances posted to COGS variance account in P&L", "Inventory valued at standard cost; actual over/under absorbed cost moves to variance", "Order status: SETC (Settlement Complete)"],
+            whyItMatters: "Settlement is critical for accurate financial reporting. Without it, costs would remain stuck on the production order as Work-in-Process (WIP) and the balance sheet would be overstated. After settlement, the P&L correctly shows the true cost of each bike produced.",
+            nextStep: null
+          }
         ]
       },
       {
         title: "Order-to-Cash (Sales & Distribution)",
         icon: "point_of_sale",
         nodes: [
-          { name: "Create Customer", step: 1, out: docs.customerId, desc: "Setup customer master data.", app: "Maintain Business Partner", input: "Customer Name, Address" },
-          { name: "Sales Inquiry", step: 5, out: docs.salesInquiry, desc: "Customer request for information.", app: "Create Inquiry", input: "Material ZC10###" },
-          { name: "Sales Quotation", step: 6, out: docs.salesQuotation, desc: "Legally binding offer to customer.", app: "Create Quotation", input: "Ref Inquiry #" },
-          { name: "Sales Order", step: 7, out: docs.salesOrder, desc: "Confirmed order from customer.", app: "Create Sales Order", input: "Ref Quotation #" },
-          { name: "Outbound Delivery", step: 47, out: docs.outboundDelivery, desc: "Initiate shipping process.", app: "Create Outbound Delivery", input: "Shipping Point MU10" },
-          { name: "Pick & Goods Issue", step: 49, out: "GI Posted", desc: "Decrease inventory, ship goods.", app: "Pick and Goods Issue", input: "Delivery #" },
-          { name: "Customer Invoice", step: 51, out: docs.customerInvoice, desc: "Revenue recognition and invoice sent.", app: "Create Billing Document", input: "Ref Delivery #" },
-          { name: "Incoming Payment", step: 53, out: docs.incomingPayment, desc: "Clearing Accounts Receivable.", app: "Post Incoming Payments", input: "Customer, Bank" }
+          {
+            name: "Create Customer", step: 1, out: docs.customerId,
+            app: "Maintain Business Partner",
+            context: "Before any sale can be processed, the customer must exist as a Business Partner in the ERP system. Customer master data is created in three views: General Data (name, address), Financial Accounting Data (reconciliation account, payment terms), and Sales Area Data (sales org, distribution channel, division).",
+            inputDetails: ["BP Role: FLCU00 (Financial Customer) + FLCU01 (Sales Customer)", "Customer name: Alpine Velo " + sId, "Address: Apex Boulevard 42, 70173 Stuttgart, DE", "Company Code: ZN00", "Sales Org: ZN10 / Channel: WS / Division: VL", "Payment Terms: ZN45 (45-day net)"],
+            outputDetails: ["Customer ID (ALPIN" + sId + ") created in Business Partner master", "Customer is now searchable in all sales transactions", "Accounts Receivable sub-ledger linked via reconciliation account 12100999"],
+            whyItMatters: "The customer master is the data foundation of the entire Order-to-Cash cycle. Every sales document - inquiry, quotation, order, delivery, invoice - references this record. Payment terms stored here determine when the customer must pay, directly affecting cash flow planning.",
+            nextStep: 5
+          },
+          {
+            name: "Sales Inquiry", step: 5, out: docs.salesInquiry,
+            app: "Manage Sales Inquiries (VA11)",
+            context: "A Sales Inquiry is a non-binding request from Alpine Velo asking Zenith Electro-Mobility about available products and pricing. It is the first step in the pre-sales process and initiates the customer interaction in the system. Inquiries can later be referenced when creating quotations.",
+            inputDetails: ["Inquiry Type: ZI10", "Sales Org: ZN10 / Channel: WS / Division: VL", "Customer: Alpine Velo " + sId, "Products: XM10 (12 pcs), XM20 (6 pcs), XM30 (4 pcs)", "Valid from/to dates"],
+            outputDetails: ["Sales Inquiry #" + (docs.salesInquiry || "18100999" + sId) + " created", "Inquiry is tracked in the document management system", "Serves as a reference document for the subsequent Quotation"],
+            whyItMatters: "Inquiries help sales teams track customer interest before a formal commitment. They feed pipeline reporting and CRM analytics. Since they are non-binding, they give the company flexibility to negotiate pricing before committing in a quotation.",
+            nextStep: 6
+          },
+          {
+            name: "Sales Quotation", step: 6, out: docs.salesQuotation,
+            app: "Manage Sales Quotations (VA21)",
+            context: "A Sales Quotation is a legally binding offer to deliver specific goods at a fixed price within a defined validity period. It is created with reference to the Sales Inquiry, copying all product and customer data. The customer can choose to accept (leading to a Sales Order) or decline.",
+            inputDetails: ["Quotation Type: QT", "Reference Inquiry: " + (docs.salesInquiry || "18100999" + sId), "Valid to: 1 month from creation", "Pricing: PR00 condition type applied (EUR 1,500 / EUR 3,500 / EUR 4,000 per unit)"],
+            outputDetails: ["Quotation #" + (docs.salesQuotation || "200000" + sId) + " created with fixed pricing", "Quotation sent to Alpine Velo for acceptance", "Validity date set - pricing is locked until expiry"],
+            whyItMatters: "The quotation is Zenith formal commercial offer. Once issued, the company is legally obligated to honor the quoted price if the customer accepts within the validity period. It protects both parties and creates a documented paper trail for dispute resolution.",
+            nextStep: 7
+          },
+          {
+            name: "Sales Order", step: 7, out: docs.salesOrder,
+            app: "Manage Sales Orders (VA01)",
+            context: "The Sales Order is created when Alpine Velo formally accepts the quotation and places an order. It is created with reference to the Quotation, copying all pricing, products, and customer data. The SO triggers availability checks in inventory, credit checks in finance, and kicks off the delivery scheduling process.",
+            inputDetails: ["Order Type: ZS10 (Standard Order)", "Reference Quotation: " + (docs.salesQuotation || "200000" + sId), "Customer PO Number: PO-" + sId, "Requested delivery date confirmed"],
+            outputDetails: ["Sales Order #" + (docs.salesOrder || "300000" + sId) + " created", "Availability check: system checks if 5 XM10 bikes are in stock or scheduled", "Credit check: Alpine Velo credit limit validated", "Delivery schedule confirmed for shipping from MU10"],
+            whyItMatters: "The Sales Order is the single most important SD document. It creates a binding commitment to deliver. Every downstream logistics step - delivery, picking, goods issue, billing - flows from this one document. It also triggers revenue recognition planning and cash flow forecasting.",
+            nextStep: 47
+          },
+          {
+            name: "Outbound Delivery", step: 47, out: docs.outboundDelivery,
+            app: "Create Outbound Delivery (VL01N)",
+            context: "The Outbound Delivery is the logistics document that instructs the warehouse to prepare and ship the goods. It is created with reference to the Sales Order and includes shipping point, route, and pick instructions. The warehouse team uses this document to physically locate, pick, and pack the bikes.",
+            inputDetails: ["Reference Sales Order: " + (docs.salesOrder || "300000" + sId), "Shipping Point: MU10", "Planned goods issue date: as per schedule", "Delivery quantities: 5 x XM10" + sId],
+            outputDetails: ["Outbound Delivery #" + (docs.outboundDelivery || "800000" + sId) + " created", "Transfer Order (TO) created for warehouse picking instructions", "Sales Order status changes to Being Processed"],
+            whyItMatters: "The delivery document is the bridge between sales and warehouse. Without it, the warehouse has no formal instruction to pick goods. It also initiates the legal shipment process - once goods are issued against this delivery, ownership transfers to the customer.",
+            nextStep: 49
+          },
+          {
+            name: "Pick & Goods Issue", step: 49, out: "GI Posted",
+            app: "Post Goods Issue (VL02N)",
+            context: "After the warehouse picker physically collects the bikes from storage, the system Goods Issue is posted. This is the legal moment of title transfer - ownership of the bikes passes from Zenith to Alpine Velo. The system decreases inventory, creates an accounting document, and marks the delivery as Goods Issued.",
+            inputDetails: ["Delivery: " + (docs.outboundDelivery || "800000" + sId), "Picked quantity: 5 x XM10 from FG10", "Movement Type: 601 (Goods Issue for Delivery)", "Pick confirmation required before GI posting"],
+            outputDetails: ["Inventory of XM10 decreases by 5 pcs (FG10 to 0)", "Accounting: Dr. Cost of Goods Sold / Cr. Inventory (Finished Goods)", "Delivery status: Goods Issued - shipment dispatched to Alpine Velo"],
+            whyItMatters: "Goods Issue triggers revenue recognition readiness. The cost of the bikes sold (COGS) is now recorded, and the SD team can create the billing document (invoice). From a supply chain perspective, the truck has left the dock - inventory is gone and the customer relationship shifts to accounts receivable.",
+            nextStep: 51
+          },
+          {
+            name: "Customer Invoice", step: 51, out: docs.customerInvoice,
+            app: "Create Billing Document (VF01)",
+            context: "The Billing Document (Customer Invoice) is created after Goods Issue is posted. It is the formal demand for payment sent to Alpine Velo. In ERP, creating the billing document posts a revenue accounting entry and creates an Accounts Receivable open item for the invoiced amount.",
+            inputDetails: ["Reference Delivery: " + (docs.outboundDelivery || "800000" + sId), "Billing Type: F2 (Invoice)", "Invoice amount: calculated from Sales Order pricing", "Payment terms: ZN45 (45 days net - due date calculated automatically)"],
+            outputDetails: ["Billing Document #" + (docs.customerInvoice || "950000" + sId) + " created", "Accounting: Dr. Accounts Receivable (Alpine Velo) / Cr. Revenue Account", "Revenue is now recognized in the Profit and Loss statement", "Open item appears on Alpine Velo account for collection"],
+            whyItMatters: "The invoice is when revenue is officially recognized. Under accrual accounting, revenue is earned when goods are delivered - not when cash is received. This invoice creates the receivable that the finance team will monitor and chase for payment within the agreed 45-day window.",
+            nextStep: 53
+          },
+          {
+            name: "Incoming Payment", step: 53, out: docs.incomingPayment,
+            app: "Post Incoming Payments (F-28)",
+            context: "The final step of the Order-to-Cash cycle. When Alpine Velo bank transfer arrives, the accountant posts the incoming payment against the open customer invoice. This clears the Accounts Receivable balance, completing the full cycle from customer creation to cash collection.",
+            inputDetails: ["Customer: ALPIN" + sId + " (Alpine Velo)", "Bank Account: 18100999 (House Bank)", "Payment amount: full invoice amount", "Reference billing document from Step 51"],
+            outputDetails: ["Incoming payment posted and matched to open invoice", "Accounting: Dr. Bank Account / Cr. Accounts Receivable", "Customer balance cleared to zero - AR closed", "Cash position in G/L bank account increased", "Full Order-to-Cash cycle complete!"],
+            whyItMatters: "This is the ultimate goal of the entire SD cycle - cash in the bank. The Days Sales Outstanding (DSO) metric tracks how long this step takes from invoice to payment. Faster collection improves the company working capital position and reduces credit risk.",
+            nextStep: null
+          }
         ]
       }
     ];
 
     let html = `
       <div class="bfd-shell">
-
-        <!-- Page Header -->
         <div class="bfd-header">
           <h1 style="display: flex; align-items: center; gap: 12px; font-size: clamp(1.4rem, 2vw, 2rem); flex-wrap: wrap;">
             <span class="material-symbols-outlined" style="color: var(--primary); font-size: 32px;">account_tree</span>
             End-to-End Business Flow Dashboard
           </h1>
-          <p style="color: var(--text-muted); margin-top: 8px; font-size: 0.95rem;">Click any milestone node to inspect its ERP application, business context, inputs &amp; outputs in the panel below.</p>
+          <p style="color: var(--text-muted); margin-top: 8px; font-size: 0.95rem;">
+            Click any process node to explore its business purpose, SAP inputs, outputs, and why it matters in the enterprise.
+          </p>
         </div>
-
-        <!-- Pipelines area: vertical stack, each scrollable horizontally -->
         <div class="bfd-pipelines">
     `;
 
@@ -1250,59 +1433,107 @@ document.addEventListener("DOMContentLoaded", () => {
 
     html += `
         </div>
-
-        <!-- Details Panel: always visible at bottom, hidden until a node is clicked -->
         <div id="flow-details-panel" class="bfd-detail-panel" style="display:none;">
           <div class="bfd-detail-header">
-            <div style="display: flex; align-items: center; gap: 12px;">
-              <span class="material-symbols-outlined" style="color: var(--primary); font-size: 24px;">info</span>
-              <h2 id="fd-title" style="font-size: clamp(1.1rem, 1.6vw, 1.4rem); color: var(--primary);">Step Details</h2>
+            <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap; justify-content:space-between;">
+              <div style="display:flex; align-items:center; gap:12px;">
+                <span class="material-symbols-outlined" style="color:var(--primary); font-size:28px;">schema</span>
+                <div>
+                  <div style="font-size:0.75rem; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:var(--text-muted);" id="fd-cycle">Cycle</div>
+                  <h2 id="fd-title" style="font-size:clamp(1.1rem,1.6vw,1.4rem); color:var(--primary); margin:0;">Step Details</h2>
+                </div>
+              </div>
+              <button id="fd-goto-btn" class="btn-fiori-primary" style="display:flex; align-items:center; gap:6px; font-size:0.85rem; padding:8px 18px;">
+                <span class="material-symbols-outlined" style="font-size:16px;">open_in_new</span>
+                <span>Go to Simulator Step</span>
+              </button>
             </div>
           </div>
-          <div class="bfd-detail-body">
-            <div class="bfd-detail-block">
-              <div class="bfd-detail-label">ERP Application</div>
-              <div id="fd-app" class="bfd-detail-value">-</div>
+          <div class="bfd-rich-body">
+            <div class="bfd-rich-section bfd-rich-context">
+              <div class="bfd-rich-label"><span class="material-symbols-outlined">menu_book</span> Business Context</div>
+              <p id="fd-context" class="bfd-rich-text"></p>
             </div>
-            <div class="bfd-detail-block">
-              <div class="bfd-detail-label">Business Context</div>
-              <div id="fd-desc" class="bfd-detail-value" style="font-size: 0.95rem; font-weight: 400; line-height: 1.5;">-</div>
+            <div class="bfd-rich-row">
+              <div class="bfd-rich-section">
+                <div class="bfd-rich-label"><span class="material-symbols-outlined">input</span> SAP Inputs Required</div>
+                <ul id="fd-inputs" class="bfd-rich-list"></ul>
+              </div>
+              <div class="bfd-rich-section bfd-rich-alt">
+                <div class="bfd-rich-label"><span class="material-symbols-outlined">output</span> Generated Outputs</div>
+                <ul id="fd-outputs" class="bfd-rich-list"></ul>
+              </div>
             </div>
-            <div class="bfd-detail-block bfd-detail-dark">
-              <div class="bfd-detail-label">Primary Inputs</div>
-              <div id="fd-input" class="bfd-detail-value">-</div>
+            <div class="bfd-rich-section bfd-rich-why">
+              <div class="bfd-rich-label"><span class="material-symbols-outlined">lightbulb</span> Why This Step Matters</div>
+              <p id="fd-why" class="bfd-rich-text"></p>
             </div>
-            <div class="bfd-detail-block bfd-detail-dark">
-              <div class="bfd-detail-label">Generated Output</div>
-              <div id="fd-output" class="bfd-detail-value" style="font-family: monospace; color: var(--primary); font-size: 1.2rem;">-</div>
+            <div class="bfd-rich-section" style="padding:16px 24px; display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
+              <span class="material-symbols-outlined" style="color:var(--primary);">grid_view</span>
+              <span style="font-size:0.82rem; font-weight:700; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.5px;">SAP Application:</span>
+              <code id="fd-app" style="font-size:0.9rem; font-weight:700; color:var(--primary); background:var(--primary-glow); padding:4px 12px; border-radius:8px;"></code>
             </div>
           </div>
         </div>
-
       </div>
     `;
 
     main.innerHTML = html;
 
-    // Bind click events to nodes
+    if (!document.getElementById("bfd-rich-styles")) {
+      const style = document.createElement("style");
+      style.id = "bfd-rich-styles";
+      style.textContent = `
+        .bfd-rich-body { display: flex; flex-direction: column; }
+        .bfd-rich-section { padding: 20px 28px; border-bottom: 1px solid var(--border); }
+        .bfd-rich-context { background: var(--background); }
+        .bfd-rich-alt { background: var(--background); }
+        .bfd-rich-why { background: var(--panel-bg); }
+        .bfd-rich-row { display: grid; grid-template-columns: 1fr 1fr; border-bottom: 1px solid var(--border); }
+        .bfd-rich-row .bfd-rich-section { border-bottom: none; border-right: 1px solid var(--border); }
+        .bfd-rich-row .bfd-rich-section:last-child { border-right: none; }
+        .bfd-rich-label { display: flex; align-items: center; gap: 8px; font-size: 0.72rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; color: var(--primary); margin-bottom: 12px; }
+        .bfd-rich-label .material-symbols-outlined { font-size: 16px; }
+        .bfd-rich-text { font-size: 0.92rem; line-height: 1.7; color: var(--text-main); margin: 0; }
+        .bfd-rich-list { list-style: none; display: flex; flex-direction: column; gap: 8px; margin: 0; padding: 0; }
+        .bfd-rich-list li { display: flex; align-items: flex-start; gap: 8px; font-size: 0.88rem; line-height: 1.5; color: var(--text-main); }
+        .bfd-rich-list li::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: var(--primary); flex-shrink: 0; margin-top: 6px; }
+        @media (max-width: 700px) { .bfd-rich-row { grid-template-columns: 1fr; } .bfd-rich-row .bfd-rich-section { border-right: none; border-bottom: 1px solid var(--border); } }
+      `;
+      document.head.appendChild(style);
+    }
+
     document.querySelectorAll(".clickable-node").forEach(nodeEl => {
       nodeEl.addEventListener("click", () => {
-        // Reset highlight on all nodes
         document.querySelectorAll(".clickable-node").forEach(n => n.classList.remove("bfd-node-active"));
         nodeEl.classList.add("bfd-node-active");
 
         const pIndex = nodeEl.getAttribute("data-pipe");
         const nIndex = nodeEl.getAttribute("data-node");
         const data = pipelines[pIndex].nodes[nIndex];
+        const pipe = pipelines[pIndex];
 
         const panel = document.getElementById("flow-details-panel");
         panel.style.display = "block";
 
-        document.getElementById("fd-title").innerText = data.name + "  \u2022  Step " + data.step;
-        document.getElementById("fd-app").innerText = data.app;
-        document.getElementById("fd-desc").innerText = data.desc;
-        document.getElementById("fd-input").innerText = data.input;
-        document.getElementById("fd-output").innerText = data.out || "N/A";
+        document.getElementById("fd-title").textContent = data.name + "  \u2022  Step " + data.step;
+        document.getElementById("fd-cycle").textContent = pipe.title;
+        document.getElementById("fd-app").textContent = data.app;
+        document.getElementById("fd-context").textContent = data.context;
+        document.getElementById("fd-why").textContent = data.whyItMatters;
+
+        const inputsList = document.getElementById("fd-inputs");
+        inputsList.innerHTML = data.inputDetails.map(i => `<li>${i}</li>`).join("");
+
+        const outputsList = document.getElementById("fd-outputs");
+        outputsList.innerHTML = data.outputDetails.map(o => `<li>${o}</li>`).join("");
+
+        const gotoBtn = document.getElementById("fd-goto-btn");
+        gotoBtn.onclick = () => {
+          currentActiveStep = data.step;
+          renderSidebar();
+          renderStep(data.step);
+        };
 
         panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
       });
@@ -1310,3 +1541,4 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
 });
+

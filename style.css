@@ -40,7 +40,7 @@
   --fluid-transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-/* Dark Mode — Sleek Slate Grey with Electric Sky Blue Accents */
+/* Dark Mode  Sleek Slate Grey with Electric Sky Blue Accents */
 [data-theme="dark"] {
   --background: #0f172a;       /* Dark slate grey */
   --panel-bg: #1e293b;         /* Charcoal card surface */
@@ -1037,7 +1037,7 @@ main.main-content::-webkit-scrollbar-thumb:hover {
 }
 
 .bfd-node.bfd-node-active {
-  background: rgba(92, 131, 116, 0.12);
+  background: rgba(75, 163, 227, 0.12);
   outline: 2px solid var(--primary);
   transform: translateY(-4px) scale(1.05);
 }
@@ -1046,19 +1046,19 @@ main.main-content::-webkit-scrollbar-thumb:hover {
   width: 52px;
   height: 52px;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--primary), #4a6b5e);
+  background: var(--primary);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #17181c;
-  box-shadow: 0 4px 15px rgba(92, 131, 116, 0.35);
+  color: #ffffff;
+  box-shadow: 0 4px 15px rgba(75, 163, 227, 0.25);
   border: 2px solid rgba(255,255,255,0.6);
   transition: box-shadow 0.3s;
 }
 
 .bfd-node:hover .bfd-node-icon,
 .bfd-node.bfd-node-active .bfd-node-icon {
-  box-shadow: 0 6px 22px rgba(92, 131, 116, 0.6);
+  box-shadow: 0 6px 22px rgba(75, 163, 227, 0.45);
 }
 
 .bfd-node-name {

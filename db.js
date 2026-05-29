@@ -127,24 +127,24 @@ const ERPdb = {
     const suffix = count > 1 ? ` (+${count - 1} entries)` : "";
 
     if (stepNum === 1) {
-      this.state.documents.customerId = "US00" + sId + (count > 1 ? ` (+${count - 1} BP)` : "");
-      this.state.documents.customerName = (primaryInput.name || `1 Elbe Cycle ${sId}`) + (count > 1 ? ` (+${count - 1} BPs)` : "");
+      this.state.documents.customerId = "ALPIN" + sId + (count > 1 ? ` (+${count - 1} BP)` : "");
+      this.state.documents.customerName = (primaryInput.name || `1 Alpine Velo ${sId}`) + (count > 1 ? ` (+${count - 1} BPs)` : "");
     } else if (stepNum === 2) {
-      this.state.documents.materialBasic = `GCBK1${sId}` + suffix;
-      this.state.documents.materialEndur = `GCBK2${sId}` + suffix;
-      this.state.documents.materialCarbon = `GCBK3${sId}` + suffix;
+      this.state.documents.materialBasic = `XM10${sId}` + suffix;
+      this.state.documents.materialEndur = `XM20${sId}` + suffix;
+      this.state.documents.materialCarbon = `XM30${sId}` + suffix;
     } else if (stepNum === 4) {
-      this.state.documents.materialGps = `GPS1${sId}` + suffix;
+      this.state.documents.materialGps = `ZC10${sId}` + suffix;
     } else if (stepNum === 5) {
-      this.state.documents.salesInquiry = "100000" + sId + suffix;
+      this.state.documents.salesInquiry = "18100999" + sId + suffix;
     } else if (stepNum === 6) {
       this.state.documents.salesQuotation = "200000" + sId + suffix;
     } else if (stepNum === 7) {
       this.state.documents.salesOrder = "300000" + sId + suffix;
     } else if (stepNum === 8) {
-      this.state.documents.routingBasic = `RO-GCBK1-${sId}` + suffix;
+      this.state.documents.routingBasic = `RO-XM10-${sId}` + suffix;
     } else if (stepNum === 9) {
-      this.state.documents.productGroup = `PG-GCBK${sId}` + suffix;
+      this.state.documents.productGroup = `PG-AV${sId}` + suffix;
     } else if (stepNum === 10) {
       this.state.documents.pirForecast = "PIR-" + sId + suffix;
     } else if (stepNum === 13) {
@@ -152,7 +152,7 @@ const ERPdb = {
     } else if (stepNum === 15) {
       this.state.documents.purchaseRequisition = "10005" + sId + suffix;
     } else if (stepNum === 16) {
-      this.state.documents.vendorId = "VN00" + sId + (count > 1 ? ` (+${count - 1} vendors)` : "");
+      this.state.documents.vendorId = "SUPP" + sId + (count > 1 ? ` (+${count - 1} vendors)` : "");
     } else if (stepNum === 17) {
       this.state.documents.vendorRfq = "600000" + sId + suffix;
     } else if (stepNum === 18) {
@@ -435,3 +435,4 @@ ERPdb.load();
 if (typeof module !== 'undefined') {
   module.exports = ERPdb;
 }
+

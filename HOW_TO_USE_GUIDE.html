@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zenith Electro-Mobility ERP Case Study Student Guide</title>
+  <!-- Google Fonts: Inter & Outfit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
+  
+  <style>
+    :root {
+      --primary: #4ba3e3;
+      --primary-dark: #358cc8;
+      --primary-glow: rgba(75, 163, 227, 0.08);
+      --background: #f8fafc;
+      --panel-bg: #ffffff;
+      --text-main: #1e293b;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background-color: var(--background);
+      color: var(--text-main);
+      line-height: 1.6;
+      padding: 40px 20px;
+    }
+
+    .container {
+      max-width: 950px;
+      margin: 0 auto;
+      background: var(--panel-bg);
+      padding: 40px;
+      border-radius: 24px;
+      box-shadow: var(--card-shadow);
+      border: 1px solid var(--border);
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Outfit', sans-serif;
+      color: var(--text-main);
+      margin-top: 30px;
+      margin-bottom: 16px;
+      letter-spacing: -0.5px;
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--primary-dark);
+      text-align: center;
+      margin-top: 0;
+      border-bottom: 2px solid var(--border);
+      padding-bottom: 20px;
+    }
+
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 8px;
+      margin-top: 40px;
+      color: var(--primary-dark);
+    }
+
+    h3 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-top: 25px;
+      color: #334155;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    p {
+      margin-bottom: 16px;
+      color: #334155;
+    }
+
+    ul, ol {
+      margin-bottom: 20px;
+      padding-left: 24px;
+    }
+
+    li {
+      margin-bottom: 8px;
+    }
+
+    /* Premium Mapping Table Styles */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 25px 0;
+      font-size: 0.92rem;
+    }
+
+    th, td {
+      border: 1px solid var(--border);
+      padding: 12px 16px;
+      text-align: left;
+    }
+
+    th {
+      background-color: var(--primary-glow);
+      color: var(--text-main);
+      font-weight: 700;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f8fafc;
+    }
+
+    /* GitHub style alerts */
+    .alert {
+      padding: 16px 20px;
+      border-radius: 16px;
+      margin: 20px 0;
+      font-weight: 500;
+      font-size: 0.92rem;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+
+    .alert.important {
+      background-color: rgba(75, 163, 227, 0.08);
+      border: 1px solid rgba(75, 163, 227, 0.2);
+      color: var(--primary-dark);
+    }
+
+    .alert-icon {
+      font-family: 'Material Symbols Outlined';
+      font-size: 24px;
+      font-style: normal;
+      font-weight: normal;
+      line-height: 1;
+      display: inline-block;
+    }
+
+    /* Highlight blocks */
+    .phase-block {
+      background: var(--background);
+      border-left: 4px solid var(--primary);
+      padding: 24px;
+      border-radius: 0 16px 16px 0;
+      margin: 25px 0;
+    }
+
+    .phase-title {
+      font-weight: 800;
+      text-transform: uppercase;
+      font-size: 0.85rem;
+      color: var(--primary);
+      letter-spacing: 1px;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .step-detail {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      padding: 18px;
+      border-radius: 12px;
+      margin-bottom: 15px;
+    }
+
+    .step-header {
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--primary-dark);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .step-subhead {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-top: 8px;
+    }
+
+    .badge-nav {
+      background-color: var(--primary-glow);
+      color: var(--primary-dark);
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: 0.78rem;
+    }
+
+    .badge-biz {
+      background-color: rgba(56, 161, 105, 0.1);
+      color: #2f855a;
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: 0.78rem;
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 50px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border);
+      padding-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Integrative ERP Logistics Student Handbook</h1>
+    <p style="text-align: center; font-size: 1.1rem; color: var(--text-muted); margin-top: 10px;">Comprehensive Operations, Navigation &amp; Business Integration Walkthrough</p>
+
+    <div class="alert important">
+      <span class="alert-icon">verified_user</span>
+      <div>
+        <strong>IPR &amp; Regulatory Safety Notice:</strong><br>
+        To fully respect proprietary intellectual property rights (IPR) and copyright regulations, this student guide utilizes an original, custom-made <strong>Zenith Electro-Mobility</strong> dataset. 
+        All operational linkages, accounting ledgers, and functional integration sequences remain 100% structurally identical.
+      </div>
+    </div>
+
+    <h2>1. Integrative Operations Manual</h2>
+
+    <div class="phase-block">
+      <span class="phase-title">Phase 1: Customer Master Setup (Steps 1 - 3)</span>
+      <p style="margin-bottom: 20px; font-weight: 500;">Prerequisite to set up the debtor financial relationship in Accounts Receivable.</p>
+
+      <div class="step-detail">
+        <div class="step-header">Step 1: Create Business Partner (Customer)</div>
+        <p><span class="badge-nav">Navigation</span> Fiori Space: <strong>Sales Person Space</strong> &rarr; App: <strong>Manage Customer Master Data</strong> &rarr; Click <strong>Create</strong> &rarr; Select <strong>Organization</strong>. Set name to <code>1 Alpine Velo ###</code>, Street to <code>Apex Boulevard</code>, City to <code>Stuttgart</code>, Postal Code to <code>70173</code>, and Region to <code>08 (Baden-Württemberg)</code>.</p>
+        <p><span class="badge-biz">Business Understanding</span> BPs capture centralized master records. Categorizing Alpine Velo as an Organization maps legal taxation rules and enables the company to generate sales invoices and calculate freight routes in compliance with federal guidelines.</p>
+      </div>
+
+      <div class="step-detail">
+        <div class="step-header">Step 2: Assign Company Code &amp; Reconciliation Account</div>
+        <p><span class="badge-nav">Navigation</span> Navigate to the <strong>Company Code</strong> sub-view &rarr; Add Company Code <code>ZN00</code> &rarr; Map Reconciliation Account G/L <code>11015000</code>.</p>
+        <p><span class="badge-biz">Business Understanding</span> Reconciliation Account <code>11015000</code> acts as a general ledger bridge. Receivables transactions post directly to the sub-ledger ( Alpine Velo's account) and automatically roll up to G/L domestic receivables, maintaining continuous financial integrity.</p>
+      </div>
+
+      <div class="step-detail">
+        <div class="step-header">Step 3: Define Sales &amp; Distribution (SD) Views</div>
+        <p><span class="badge-nav">Navigation</span> Navigate to the <strong>Sales &amp; Distribution</strong> sub-view &rarr; Add Sales Org <code>ZN10</code>, Channel <code>WS</code>, Division <code>VL</code>. Set wholesale prices for Commuter (1950 EUR), Endurance (3950 EUR), and Carbon Custom (4450 EUR).</p>
+        <p><span class="badge-biz">Business Understanding</span> SD views configure billing criteria and discount rules. Linking them to the proper organization ensures the system pulls accurate pricing conditions during sales transactions.</p>
+      </div>
+    </div>
+
+    <div class="phase-block">
+      <span class="phase-title">Phase 2: Materials Management Setup (Step 4)</span>
+      
+      <div class="step-detail">
+        <div class="step-header">Step 4: Create Raw Accessories Template</div>
+        <p><span class="badge-nav">Navigation</span> Fiori Space: <strong>Warehouse Supervisor</strong> &rarr; App: <strong>Manage Product Master Data</strong> &rarr; Choose Create using template <code>ZC-REF1-###</code>. Assign ID <code>ZC10###</code>, description <code>Zenith Integrated Ride Computer</code>, plant <code>MU10</code>, standard valuation price <code>195 EUR</code>.</p>
+        <p><span class="badge-biz">Business Understanding</span> Establishing standard asset valuation in the Product Master guarantees that any raw component receipt immediately increments material inventory assets on the company's central balance sheet.</p>
+      </div>
+    </div>
+
+    <div class="phase-block">
+      <span class="phase-title">Phase 3: Pre-Sales &amp; Sales Order entry (Steps 5 - 7)</span>
+
+      <div class="step-detail">
+        <div class="step-header">Step 5: Log Customer Sales Inquiry</div>
+        <p><span class="badge-nav">Navigation</span> App: <strong>Manage Sales Inquiries</strong> &rarr; Select Inquiry Type <code>ZI10</code>. Input Sold-To party <code>Alpine Velo ###</code> and quantity parameters (10 Commuter, 5 Endurance, 3 Custom Carbon).</p>
+        <p><span class="badge-biz">Business Understanding</span> Inquiries represent non-binding negotiations. They register interest but do not allocate physical stock or create G/L liabilities, serving solely as tracking tools for commercial planning.</p>
+      </div>
+
+      <div class="step-detail">
+        <div class="step-header">Step 6: Submit Binding Sales Quotation</div>
+        <p><span class="badge-nav">Navigation</span> App: <strong>Manage Sales Quotations</strong> &rarr; Click Create &rarr; Reference the Sales Inquiry generated in Step 5 to auto-fill all data fields. Add a 1-month valid-to deadline.</p>
+        <p><span class="badge-biz">Business Understanding</span> A Quotation is a legally binding contract. It commits Zenith Electro-Mobility to deliver the velos under locked wholesale pricing within the validity window, protecting the customer from price spikes.</p>
+      </div>
+
+      <div class="step-detail">
+        <div class="step-header">Step 7: Post Commercial Sales Order</div>
+        <p><span class="badge-nav">Navigation</span> App: <strong>Manage Sales Orders</strong> &rarr; Click Create &rarr; Select Standard Sales Order Type <code>ZS10</code>. Reference the Sales Quotation to finalize the transaction.</p>
+        <p><span class="badge-biz">Business Understanding</span> The Sales Order is the core execution trigger. Saving it prompts availability checks, reserves finished stock, and establishes scheduling requirements, alerting manufacturing and warehouse clerks.</p>
+      </div>
+    </div>
+
+    <div class="phase-block">
+      <span class="phase-title">Phase 4: Production Planning &amp; MRP Runs (Steps 8 - 14)</span>
+
+      <div class="step-detail">
+        <div class="step-header">Step 8: Define Assembly Operations Routing</div>
+        <p><span class="badge-nav">Navigation</span> App: <strong>Manage Routings</strong> &rarr; Create Routing <code>RO-XM10-###</code> by copying reference template <code>XM10-DE</code>.</p>
+        <p><span class="badge-biz">Business Understanding</span> Routings define step-by-step manufacturing instructions (assembly work centers, setup times, machine speeds). They are critical for labor scheduling and variance calculations.</p>
+      </div>
+
+      <div class="step-detail">
+        <div class="step-header">Step 13: Run MRP Live (MD01N)</div>
+        <p><span class="badge-nav">Navigation</span> App: <strong>MRP Live</strong> &rarr; Target Plant <code>MU10</code> &rarr; Execute net requirement calculations.</p>
+        <p><span class="badge-biz">Business Understanding</span> Material Requirements Planning (MRP) matches supply to demand. It scans stock balances, notices the sales order shortage of raw components, and auto-generates internal purchase requisitions to drive sourcing.</p>
+      </div>
+    </div>
+
+    <div class="phase-block">
+      <span class="phase-title">Phase 5: Sourcing &amp; Procurement purchasing (Steps 15 - 31)</span>
+
+      <div class="step-detail">
+        <div class="step-header">Step 16: Create Supplier Master Record</div>
+        <p><span class="badge-nav">Navigation</span> App: <strong>Manage Supplier Master Data</strong> &rarr; Create supplier <code>1 AlpineGear Solutions ###</code>. Assign Company Code <code>ZN00</code> and Reconciliation G/L <code>21015000</code> (Trade Payables).</p>
+        <p><span class="badge-biz">Business Understanding</span> Set up the Accounts Payable relationship. G/L <code>21015000</code> tracks payables liabilities owed to vendors before invoice payment clearing.</p>
+      </div>
+
+      <div class="step-detail">
+        <div class="step-header">Step 20: Post Legally Binding Purchase Order (PO)</div>
+        <p><span class="badge-nav">Navigation</span> App: <strong>Manage Purchase Orders (ME21N)</strong> &rarr; Reference the comparative selected supplier quotation to raise PO <code>450000###</code>.</p>
+        <p><span class="badge-biz">Business Understanding</span> The PO is a formal procurement contract sent to AlpineGear Solutions committing to purchase raw ride computers, driving physical dispatch.</p>
+      </div>
+
+      <div class="step-detail">
+        <div class="step-header">Step 21-22: Goods Receipt Post (MIGO)</div>
+        <p><span class="badge-nav">Navigation</span> App: <strong>Post Goods Receipt (MIGO)</strong> &rarr; Reference PO <code>450000###</code> &rarr; Receive stock into storage location <code>RM10</code> under movement <code>MT10</code>.</p>
+        <p><span class="badge-biz">Business Understanding</span> MIGO logs physical warehouse receipt. It debits Inventory Assets and credits <strong>GR/IR (Goods Receipt/Invoice Receipt) Clearing</strong>, recognizing inventory asset arrival before processing invoice bills.</p>
+      </div>
+
+      <div class="step-detail">
+        <div class="step-header">Step 25: Supplier Invoice Matching (MIRO)</div>
+        <p><span class="badge-nav">Navigation</span> App: <strong>Create Supplier Invoice (MIRO)</strong> &rarr; Verify invoice matches PO rates and GR quantities. Post invoice <code>INV-###</code> for <code>19,800 EUR</code>.</p>
+        <p><span class="badge-biz">Business Understanding</span> Verifies PO, GR, and Invoice matching (Three-Way Match). MIRO clears GR/IR and credits Trade Payables, establishing legal account payables debt to AlpineGear Solutions.</p>
+      </div>
+    </div>
+
+    <h2>3. Offline Excel Synchronization</h2>
+    <p>Planners can add multiple entries dynamically for any transaction step by clicking the <code>+ Add Another Entry</code> button on form headers. Export progress via the <strong>Export Excel</strong> buttons or import spreadsheets in <strong>Column F</strong> to restore and validate your operations in one go!</p>
+
+    <div class="footer">
+      <p>&copy; 2026 Zenith Electro-Mobility GmbH. Designed for Academic &amp; Interactive ERP Training.</p>
+    </div>
+  </div>
+
+</body>
+</html>

@@ -1,5 +1,3 @@
-// ERP Simulator — main application controller
-
 document.addEventListener("DOMContentLoaded", () => {
   // Bind UI Elements
   const studentIdInput = document.getElementById("student-id-input");
@@ -645,14 +643,14 @@ document.addEventListener("DOMContentLoaded", () => {
             let val = f.value || "";
             val = val.replace(/###/g, sId);
             
-            if (f.name === "ref_inquiry") val = docs.salesInquiry || "100000" + sId;
+            if (f.name === "ref_inquiry") val = docs.salesInquiry || "18100999" + sId;
             if (f.name === "ref_quotation" && step.number === 7) val = docs.salesQuotation || "200000" + sId;
             if (f.name === "ref_quotation" && step.number === 20) val = docs.vendorQuotation || "700000" + sId;
             if (f.name === "ref_rfq") val = docs.vendorRfq || "600000" + sId;
             if (f.name === "ref_po") val = docs.purchaseOrder || "450000" + sId;
             if (f.name === "ref_so") val = docs.salesOrder || "300000" + sId;
             if (f.name === "ref_delivery") val = docs.outboundDelivery || "800000" + sId;
-            if (f.name === "prod_order") val = docs.productionOrder || "10000" + sId;
+            if (f.name === "prod_order") val = docs.productionOrder || "10001" + sId;
             if (f.name === "planned_order") val = "PL-450" + sId;
             
             // Intelligently vary default values for row index > 1
@@ -704,7 +702,7 @@ document.addEventListener("DOMContentLoaded", () => {
             // Reference checks
             let isRefCorrect = true;
             if (f.name === "ref_inquiry") {
-              let refVal = docs.salesInquiry || "100000" + sId;
+              let refVal = docs.salesInquiry || "18100999" + sId;
               if (rowIndex > 1 && !refVal.includes("_")) refVal = refVal + "_" + rowIndex;
               isRefCorrect = val === refVal;
             }
@@ -739,7 +737,7 @@ document.addEventListener("DOMContentLoaded", () => {
               isRefCorrect = val === refVal;
             }
             if (f.name === "prod_order") {
-              let refVal = docs.productionOrder || "10000" + sId;
+              let refVal = docs.productionOrder || "10001" + sId;
               if (rowIndex > 1 && !refVal.includes("_")) refVal = refVal + "_" + rowIndex;
               isRefCorrect = val === refVal;
             }
@@ -781,22 +779,22 @@ document.addEventListener("DOMContentLoaded", () => {
       const count = activeRows.length;
       const countStr = count > 1 ? ` (${count} items)` : "";
       
-      if (step.number === 1) generatedMsg = `Business Partners US00${sId}${count > 1 ? ` (+${count-1} BPs)` : ""} created.`;
-      else if (step.number === 2) generatedMsg = `Materials GCBK1${sId}, GCBK2${sId}, GCBK3${sId}${countStr} created.`;
-      else if (step.number === 4) generatedMsg = `Material GPS1${sId}${countStr} created.`;
-      else if (step.number === 5) generatedMsg = `Sales Inquiry #100000${sId}${countStr} saved.`;
+      if (step.number === 1) generatedMsg = `Business Partners ALPIN${sId}${count > 1 ? ` (+${count-1} BPs)` : ""} created.`;
+      else if (step.number === 2) generatedMsg = `Materials XM10${sId}, XM20${sId}, XM30${sId}${countStr} created.`;
+      else if (step.number === 4) generatedMsg = `Material ZC10${sId}${countStr} created.`;
+      else if (step.number === 5) generatedMsg = `Sales Inquiry #18100999${sId}${countStr} saved.`;
       else if (step.number === 6) generatedMsg = `Sales Quotation #200000${sId}${countStr} created.`;
       else if (step.number === 7) generatedMsg = `Sales Order #300000${sId}${countStr} created with reference.`;
       else if (step.number === 15) generatedMsg = `Planned Order converted to Purchase Requisition #10005${sId}${countStr}.`;
-      else if (step.number === 16) generatedMsg = `Vendor MagdePedal Tech (VN00${sId})${count > 1 ? ` (+${count-1} vendors)` : ""} created.`;
+      else if (step.number === 16) generatedMsg = `Vendor AlpineGear Solutions (SUPP${sId})${count > 1 ? ` (+${count-1} vendors)` : ""} created.`;
       else if (step.number === 17) generatedMsg = `Request for Quotation (RFQ) #600000${sId}${countStr} submitted to Vendor.`;
       else if (step.number === 18) generatedMsg = `Quotation #700000${sId}${countStr} created from Supplier.`;
       else if (step.number === 20) generatedMsg = `Purchase Order #450000${sId}${countStr} created.`;
       else if (step.number === 22) generatedMsg = `Goods Receipt posted under Material Document #500000${sId}${countStr}.`;
       else if (step.number === 25) generatedMsg = `Supplier Invoice #900000${sId}${countStr} posted successfully.`;
       else if (step.number === 28) generatedMsg = `Outgoing Payment OP-5000${sId}${countStr} cleared.`;
-      else if (step.number === 35) generatedMsg = `Production Order #10000${sId}${countStr} created from Planned Order.`;
-      else if (step.number === 41) generatedMsg = `Goods Receipt posted for Production Order #510000${sId}${countStr}.`;
+      else if (step.number === 35) generatedMsg = `Production Order #10001${sId}${countStr} created from Planned Order.`;
+      else if (step.number === 41) generatedMsg = `Goods Receipt posted for Production Order #510001${sId}${countStr}.`;
       else if (step.number === 47) generatedMsg = `Outbound Delivery #800000${sId}${countStr} created.`;
       else if (step.number === 51) generatedMsg = `Billing Document Customer Invoice #950000${sId}${countStr} posted.`;
       else if (step.number === 53) generatedMsg = `Incoming Payment IP-8000${sId}${countStr} cleared. Cycle completed!`;
@@ -899,33 +897,33 @@ document.addEventListener("DOMContentLoaded", () => {
     "bp_role": "BP Role (Business Partner Role): Defines the business function of this master record in ERP. FLCU00 is for Financial Accounting (FI Customer) and FLCU01 is for Sales (Customer Sales Data).",
     "form_address": "Form of Address: Standard greeting format for the business partner database. We use 'Company' for corporate accounts.",
     "name": "Name: The legal business name of the customer organization. In the training environment, we prefix it with '1' and suffix with your student ID (###) to guarantee uniqueness.",
-    "street": "Street: The street name for the business partner's primary delivery and billing address. We use 'Main Street' for Elbe Cycle.",
+    "street": "Street: The street name for the business partner's primary delivery and billing address. We use 'Main Street' for Alpine Velo.",
     "house_num": "House Number: The building number for the business partner's address, set to 7.",
-    "city": "City: The city where the business partner's headquarters is located, set to Magdeburg.",
-    "postal_code": "Postal Code: The postal code for the address. Magdeburg's Global Bike warehouse uses 39106.",
+    "city": "City: The city where the business partner's headquarters is located, set to Munich.",
+    "postal_code": "Postal Code: The postal code for the address. Munich's Zenith Electro-Mobility warehouse uses 60311.",
     "country": "Country/Region: Two-letter ISO country code. DE represents Germany (Deutschland).",
     "region": "Region: Sub-state region code. 15 represents Saxony-Anhalt (Sachsen-Anhalt) in Germany.",
     "language": "Language: The language key for all communications and printing. DE stands for German (Deutsch).",
     "search_term": "Search Term: A 10-character keyword used to quickly find and filter this Business Partner in search dialogs. We use your student ID (###).",
-    "trans_zone": "Transportation Zone: Groups regional locations to simplify shipping route determination. We use Area North due to Magdeburg's geographic location.",
-    "company_code": "Company Code: Represents an independent legal financial accounting entity in ERP. DE00 represents Global Bike Germany GmbH.",
-    "recon_account": "Reconciliation Account: The G/L account that aggregates postings from sub-ledger accounts (Accounts Receivable / Trade Receivables). 12000000 is Trade Receivables Domestic, and 30000000 is Trade Payables Domestic.",
+    "trans_zone": "Transportation Zone: Groups regional locations to simplify shipping route determination. We use Zone Central due to Munich's geographic location.",
+    "company_code": "Company Code: Represents an independent legal financial accounting entity in ERP. ZN00 represents Zenith Electro-Mobility GmbH.",
+    "recon_account": "Reconciliation Account: The G/L account that aggregates postings from sub-ledger accounts (Accounts Receivable / Trade Receivables). 12100999 is Trade Receivables Domestic, and 21100999 is Trade Payables Domestic.",
     "sort_key": "Sort Key: Determines how line items are automatically sorted in financial reports. 001 sorts by Posting Date.",
     "payment_term": "Payment Term: Terms of payment agreed with the partner. 0001 represents immediate payment due net (no cash discount).",
-    "sales_org": "Sales Organization: An organizational unit responsible for distributing goods and services and negotiating sales terms. DS00 represents Global Bike Germany's wholesale sales organization.",
-    "dist_channel": "Distribution Channel: The channel through which goods reach the customer. WH represents Wholesale (sales to retail stores).",
-    "division": "Division: Represents a product line in Sales. BI represents the Bicycles division.",
-    "price_gcbk1": "Material Price (PR00) for GCBK1###: The wholesale selling price for the Basic Sport & Commute Bike, set to 1500 EUR.",
-    "price_gcbk2": "Material Price (PR00) for GCBK2###: The wholesale selling price for the Endurance Sport & Commute Bike, set to 3500 EUR.",
-    "price_gcbk3": "Material Price (PR00) for GCBK3###: The wholesale selling price for the Carbon Sport & Commute Bike, set to 4000 EUR.",
+    "sales_org": "Sales Organization: An organizational unit responsible for distributing goods and services and negotiating sales terms. ZN10 represents Zenith Electro-Mobility Germany's wholesale sales organization.",
+    "dist_channel": "Distribution Channel: The channel through which goods reach the customer. WS represents Wholesale (sales to retail stores).",
+    "division": "Division: Represents a product line in Sales. VL represents the Bicycles division.",
+    "price_xm10": "Material Price (PR00) for XM10###: The wholesale selling price for the Basic Sport & Commute Bike, set to 1500 EUR.",
+    "price_xm20": "Material Price (PR00) for XM20###: The wholesale selling price for the Endurance Sport & Commute Bike, set to 3500 EUR.",
+    "price_xm30": "Material Price (PR00) for XM30###: The wholesale selling price for the Carbon Sport & Commute Bike, set to 4000 EUR.",
     "cond_type": "Condition Type: Dictates the pricing element in ERP. PR00 stands for standard Selling Price.",
-    "plant": "Delivering Plant: The plant location from which goods are manufactured, stored, and shipped. HD00 represents Heidelberg.",
-    "gps_id": "Material ID: Unique identifier for the GPS computer. In training, we use GPS1###.",
-    "gps_desc": "Description: A short descriptive text for the material master record, set to 'Integrated GPS Bike Computer'.",
+    "plant": "Delivering Plant: The plant location from which goods are manufactured, stored, and shipped. MU10 represents Munich.",
+    "zc10_id": "Material ID: Unique identifier for the ride computer. In training, we use ZC10###.",
+    "zc10_desc": "Description: A short descriptive text for the material master record, set to 'Zenith Integrated Ride Computer'.",
     "uom": "Base Unit of Measure: The unit in which inventory is managed. PC stands for Pieces.",
     "mat_group": "Material Group: Groups materials with similar characteristics for purchasing and reporting. UTILITY is used for accessories.",
     "price_std": "Standard Price: The pre-calculated inventory cost of the item in the material master, set to 150 EUR.",
-    "inq_type": "Inquiry Type: Document type for sales inquiries. IN is standard Sales Inquiry.",
+    "inq_type": "Inquiry Type: Document type for sales inquiries. ZI10 is standard Sales Inquiry.",
     "customer": "Customer ID: Reference business partner number created in Step 1.",
     "ref_inquiry": "Reference Inquiry ID: The Inquiry document number generated in Step 5, used to copy details and maintain integration.",
     "ref_quotation": "Reference Quotation ID: The Quotation document number generated in Step 6 (for Sales Order) or Step 18 (for Purchase Order).",
@@ -933,75 +931,75 @@ document.addEventListener("DOMContentLoaded", () => {
     "ref_rfq": "Reference RFQ ID: The Request for Quotation document number created in Step 17.",
     "quantity": "Quantity: The number of pieces or units being ordered or processed.",
     "amount": "Amount: The total financial amount in EUR for the posting or invoice.",
-    "bank_acc": "Bank Account: The G/L account representing bank funds. 100000 is the main house bank account.",
+    "bank_acc": "Bank Account: The G/L account representing bank funds. 18100999 is the main house bank account.",
     "planned_order": "Planned Order ID: Generated automatically by MRP (Material Requirements Planning) based on independent demands.",
     "prod_order": "Production Order ID: Authorizes production on the shop floor. Converted from Planned Order.",
     "yield_qty": "Yield Quantity: The number of completed pieces being confirmed from production.",
-    "shipping_point": "Shipping Point: The physical location responsible for shipping. HD00 is Heidelberg.",
+    "shipping_point": "Shipping Point: The physical location responsible for shipping. MU10 is Munich.",
     "ref_so": "Reference Sales Order ID: The Sales Order document number generated in Step 7.",
     "ref_delivery": "Reference Outbound Delivery ID: The Delivery document number generated in Step 47.",
-    "pick_gcbk1": "Picked Quantity (GCBK1###): The quantity of Basic bikes physically picked from storage (must match order quantity).",
-    "pick_gcbk2": "Picked Quantity (GCBK2###): The quantity of Endurance bikes physically picked from storage.",
-    "pick_gcbk3": "Picked Quantity (GCBK3###): The quantity of Carbon custom bikes physically picked from storage.",
-    "settle_rule": "Settlement Rule: Defines how production costs are settled. ORD settles to the Production Order.",
-    "gcbk1_id": "Basic Bike Material ID: Unique part number for the Basic Sport & Commute Bike. Configured as GCBK1### to distinguish your student stock.",
-    "gcbk1_desc": "Basic Bike Description: Short text describing the Basic Sport & Commute Bike in the Material Master for cataloging and search. Set to 'Basic Sport & Commute Bike (Black)'.",
-    "gcbk2_id": "Endurance Bike Material ID: Unique part number for the Endurance Sport & Commute Bike (GCBK2###) in ERP Logistics.",
-    "gcbk2_desc": "Endurance Bike Description: Material catalog text describing the Endurance Sport & Commute Bike, set to 'Endurance Sport & Commute Bike (Red)'.",
-    "gcbk3_id": "Carbon Bike Material ID: Unique part number for the Custom Carbon Bike (GCBK3###), which is manufactured on-demand under Make-to-Order.",
-    "gcbk3_desc": "Carbon Bike Description: Material catalog text for the Custom Carbon Sport & Commute Bike, set to 'Carbon Sport & Commute Bike (Gray)'.",
+    "pick_xm10": "Picked Quantity (XM10###): The quantity of Basic bikes physically picked from storage (must match order quantity).",
+    "pick_xm20": "Picked Quantity (XM20###): The quantity of Endurance bikes physically picked from storage.",
+    "pick_xm30": "Picked Quantity (XM30###): The quantity of Carbon custom bikes physically picked from storage.",
+    "settle_rule": "Settlement Rule: Defines how production costs are settled. ZS10D settles to the Production Order.",
+    "xm10_id": "Basic Bike Material ID: Unique part number for the Basic Sport & Commute Bike. Configured as XM10### to distinguish your student stock.",
+    "xm10_desc": "Basic Bike Description: Short text describing the Basic Sport & Commute Bike in the Material Master for cataloging and search. Set to 'Basic Sport & Commute Bike (Black)'.",
+    "xm20_id": "Endurance Bike Material ID: Unique part number for the Endurance Sport & Commute Bike (XM20###) in ERP Logistics.",
+    "xm20_desc": "Endurance Bike Description: Material catalog text describing the Endurance Sport & Commute Bike, set to 'Endurance Sport & Commute Bike (Red)'.",
+    "xm30_id": "Carbon Bike Material ID: Unique part number for the Custom Carbon Bike (XM30###), which is manufactured on-demand under Make-to-Order.",
+    "xm30_desc": "Carbon Bike Description: Material catalog text for the Custom Carbon Sport & Commute Bike, set to 'Carbon Sport & Commute Bike (Gray)'.",
     "inv_date": "Billing Invoice Date: The official accounting posting date for the billing document. In real life, it establishes when accounts receivable are recognized and determines the payment due date based on payment terms.",
     "m1_fc": "Basic Bike Forecast Qty: Represents the Planned Independent Requirement (PIR) forecast quantity. In real ERPs, this forecast is entered by demand planners to drive material requirements planning (MRP) to build inventory before sales occur.",
     "m2_fc": "Endurance Bike Forecast Qty: Represents the Planned Independent Requirement (PIR) forecast quantity for the Endurance bike, establishing demand signals in the production schedule.",
     "m3_fc": "Carbon Bike Forecast Qty: Represents the Planned Independent Requirement (PIR) forecast quantity for the Carbon bike (set to 0, since carbon bikes are make-to-order).",
-    "movement": "Goods Movement Type: A 3-digit key that controls goods receipt, goods issue, and stock transfers. 561 represents Initial Stock Entry (used to load initial balance sheets), and 101 represents Goods Receipt for a Purchase Order (updates stock inventory and balances clearing).",
+    "movement": "Goods Movement Type: A 3-digit key that controls goods receipt, goods issue, and stock transfers. 561 represents Initial Stock Entry (used to load initial balance sheets), and MT10 represents Goods Receipt for a Purchase Order (updates stock inventory and balances clearing).",
     "mrp_param": "MRP Parameters: Defines how material requirements planning operates. 'NETCH' stands for Net Change Planning (only plans items with demand changes since last run), '1' triggers automatic Purchase Requisition creation for component deficits, and '3' schedules routing lines.",
-    "pg_id": "Product Group ID: Groups similar products together (e.g. PG-GCBK###) in ERP PP. This allows planners to run production forecasts, planning, and capacity analysis at an aggregated group level rather than planning each individual bike.",
+    "pg_id": "Product Group ID: Groups similar products together (e.g. PG-AV###) in ERP PP. This allows planners to run production forecasts, planning, and capacity analysis at an aggregated group level rather than planning each individual bike.",
     "pg_desc": "Product Group Description: Descriptive name for the bicycle grouping, set to 'Sport & Commute Bikes ###'.",
-    "pg_members": "Product Group Members: The specific material part numbers (GCBK1###, GCBK2###) that are grouped under this planning family for aggregated demand forecasts.",
-    "qty_gcbk1": "Order Quantity (Basic): The number of Basic Sport & Commute Bikes ordered by the customer (5 units), driving logistics demand downstream.",
-    "qty_gcbk2": "Order Quantity (Endurance): The number of Endurance Sport & Commute Bikes ordered by the customer (2 units), driving shipping and inventory allocation.",
-    "qty_gcbk3": "Order Quantity (Carbon): The number of custom Carbon Sport & Commute Bikes ordered by the customer (5 units) under Make-to-Order.",
+    "pg_members": "Product Group Members: The specific material part numbers (XM10###, XM20###) that are grouped under this planning family for aggregated demand forecasts.",
+    "qty_xm10": "Order Quantity (Basic): The number of Basic Sport & Commute Bikes ordered by the customer (5 units), driving logistics demand downstream.",
+    "qty_xm20": "Order Quantity (Endurance): The number of Endurance Sport & Commute Bikes ordered by the customer (2 units), driving shipping and inventory allocation.",
+    "qty_xm30": "Order Quantity (Carbon): The number of custom Carbon Sport & Commute Bikes ordered by the customer (5 units) under Make-to-Order.",
     "quot_type": "Quotation Type: Document type for sales quotations, set to QT. It represents a legally binding offer to deliver goods at a set price within a specific validity period.",
-    "rfq_type": "Request for Quotation Type: Document type for RFQ, set to AN. In real procurement, an RFQ is sent to multiple suppliers to invite competing bids for raw materials.",
+    "rfq_type": "Request for Quotation Type: Document type for RFQ, set to ZR10. In real procurement, an RFQ is sent to multiple suppliers to invite competing bids for raw materials.",
     "routing_title": "Routing Worklist Group: The routing group header used to group assembly routing operations for finished bicycles under a single administrative task list.",
-    "so_type": "Sales Order Type: Document type for standard sales orders, set to OR (Order). In ERP, it represents a formal contractual agreement between the seller and customer.",
+    "so_type": "Sales Order Type: Document type for standard sales orders, set to ZS10 (Order). In ERP, it represents a formal contractual agreement between the seller and customer.",
     "strat_20": "Strategy Group 20 (Make-to-Order): A production planning strategy where manufacturing is only triggered by an active sales order. No inventory is built in advance. This is used for expensive, customized products like the Carbon Custom Bike.",
     "strat_40": "Strategy Group 40 (Make-to-Stock): A production planning strategy driven by forecast demands (PIRs). Finished goods are assembled in advance and stored in inventory to fulfill customer orders immediately from stock (used for Basic and Endurance bikes).",
-    "supplier": "Supplier / Vendor ID: The unique business partner number for your vendor (VN00###), representing MagdePedal Tech in accounts payable.",
+    "supplier": "Supplier / Vendor ID: The unique business partner number for your vendor (SUPP-###), representing AlpineGear Solutions in accounts payable.",
     "target": "Target Qty: The baseline quantity of goods being negotiated in the initial sales inquiry document (e.g., 5 Basic, 2 Endurance, 5 Carbon custom bikes).",
-    "temp_basic": "Routing Template (Basic): The standard assembly work sequence template (GCBK1-DE) used as a reference to compile the setup and assembly routing times for the Basic bike.",
-    "temp_endurance": "Routing Template (Endurance): The standard assembly work sequence template (GCBK2-DE) used as a reference for compilation of production lines.",
+    "temp_basic": "Routing Template (Basic): The standard assembly work sequence template (XM10-DE) used as a reference to compile the setup and assembly routing times for the Basic bike.",
+    "temp_endurance": "Routing Template (Endurance): The standard assembly work sequence template (XM20-DE) used as a reference for compilation of production lines.",
     "valid_to": "Validity End Date: Specifies the expiration date of the quotation or agreement. In real life, it protects the company by ensuring that wholesale pricing commitments expire after a set time (e.g. 1 month)."
   };
 
   // ERP ERP display-only step-specific status explanations
   const ERPStepStatusExpl = {
-    11: "Planned Independent Requirements (PIRs) represent stock forecasts that drive your Production Planning. This transaction (MD63) displays the forecast levels (50, 60, 55 units) successfully saved in the Heidelberg plant. It guarantees that the Material Requirements Planning (MRP) run in Step 13 has correct demands to calculate component shortages.",
-    12: "A Production Version defines which bill of materials (BOM) and routing are used to manufacture a product. Supplementing the Production Version ensures that the ERP system has a valid manufacturing route for GCBK1### and GCBK2### in Heidelberg. It links the Bill of Materials (BOM) to the Routing before shop-floor conversion.",
-    14: "The Stock/Requirements List (MD04) is the most critical transaction in ERP Logistics. It shows real-time stock levels, sales demands, and planned independent requirements. It displays that you currently have 0 stock but a demand of 50 units of GCBK1###, confirming that a shortage exists which MRP will solve.",
-    15: "This step converts a planned order created during MRP into a formal Purchase Requisition (PR). A PR represents an internal request from the production department to the purchasing department, asking them to procure 100 units of the Integrated GPS Computer (GPS1###) from an external supplier.",
-    19: "This step compares quotations received from various suppliers to find the most cost-effective deal. It ranks vendor bids by net price, allowing you to select MagdePedal Tech's bid of 130 EUR per unit as the cheapest supplier for the Integrated GPS Computer component.",
-    21: "Verifies that Purchase Order (PO) #450000### has been successfully registered in the Heidelberg plant. Displaying the PO details ensures that the quantity (100 units), vendor (MagdePedal Tech), plant (HD00), and wholesale pricing (130 EUR) are correct before posting the receipt of goods.",
-    23: "This step checks the stock level of the GPS computer in HD00 after receiving the goods from the vendor. It displays that unrestricted stock has increased from 0 to 100 units, confirming the receipt was posted successfully in the material master.",
-    24: "This step checks the Material Document generated by the goods receipt. It confirms that a movement type 101 (Goods Receipt for Purchase Order) has successfully updated the General Ledger, matching the physical stock increase to the procurement cycle.",
+    11: "Planned Independent Requirements (PIRs) represent stock forecasts that drive your Production Planning. This transaction (MD63) displays the forecast levels (50, 60, 55 units) successfully saved in the Munich plant. It guarantees that the Material Requirements Planning (MRP) run in Step 13 has correct demands to calculate component shortages.",
+    12: "A Production Version defines which bill of materials (BOM) and routing are used to manufacture a product. Supplementing the Production Version ensures that the ERP system has a valid manufacturing route for XM10### and XM20### in Munich. It links the Bill of Materials (BOM) to the Routing before shop-floor conversion.",
+    14: "The Stock/Requirements List (MD04) is the most critical transaction in ERP Logistics. It shows real-time stock levels, sales demands, and planned independent requirements. It displays that you currently have 0 stock but a demand of 50 units of XM10###, confirming that a shortage exists which MRP will solve.",
+    15: "This step converts a planned order created during MRP into a formal Purchase Requisition (PR). A PR represents an internal request from the production department to the purchasing department, asking them to procure 100 units of the Zenith Integrated Ride Computer (ZC10###) from an external supplier.",
+    19: "This step compares quotations received from various suppliers to find the most cost-effective deal. It ranks vendor bids by net price, allowing you to select AlpineGear Solutions's bid of 130 EUR per unit as the cheapest supplier for the Zenith Integrated Ride Computer component.",
+    21: "Verifies that Purchase Order (PO) #450000### has been successfully registered in the Munich plant. Displaying the PO details ensures that the quantity (100 units), vendor (AlpineGear Solutions), plant (MU10), and wholesale pricing (130 EUR) are correct before posting the receipt of goods.",
+    23: "This step checks the stock level of the ride computer in MU10 after receiving the goods from the vendor. It displays that unrestricted stock has increased from 0 to 100 units, confirming the receipt was posted successfully in the material master.",
+    24: "This step checks the Material Document generated by the goods receipt. It confirms that a movement type MT10 (Goods Receipt for Purchase Order) has successfully updated the General Ledger, matching the physical stock increase to the procurement cycle.",
     26: "The Purchase Order History displays all material documents (goods receipts) and accounting documents (supplier invoices) linked to this PO. This allows you to verify that 100 units were received and an invoice for 13,000 EUR was successfully processed.",
     27: "The Document Flow links all sales and logistics documents in chronological order. In MM procurement, this shows the sequential flow from Purchase Requisition to Purchase Order, Goods Receipt, and Supplier Invoice, confirming that the cycle is fully integrated.",
-    29: "This step displays the accounts payable balance for MagdePedal Tech (VN00###) before issuing the cash payment. It confirms a credit balance of 13,000 EUR in DE00, representing the outstanding trade payables owed to the supplier.",
+    29: "This step displays the accounts payable balance for AlpineGear Solutions (SUPP-###) before issuing the cash payment. It confirms a credit balance of 13,000 EUR in ZN00, representing the outstanding trade payables owed to the supplier.",
     30: "Displays the PO history again after making the supplier payment. This allows you to check that both the goods receipt document and the invoice document are settled, and the payment voucher has been successfully posted to PO history.",
-    31: "This transaction displays the General Ledger (G/L) accounts balance list. It allows the accountant to check that the G/L bank account (100000) was credited by 13,000 EUR and the trade payables account (30000000) was debited, balancing the cash clearing.",
-    32: "A Routing defines the sequential operations (work centers, setup times, machine times) required to manufacture a product. Creating a routing for the custom Carbon Bike (GCBK3###) by copying GCBK2### ensures that the shop floor worker knows exactly how to assemble this custom-ordered bike.",
-    33: "Creates the active Production Version for the custom GCBK3### bike. This links the custom Bill of Material (BOM) to the newly created GCBK3### routing, which is a mandatory prerequisite in ERP to convert make-to-order sales orders into production orders.",
-    34: "Verifies the material master record details for the three bikes GCBK1###, GCBK2###, and GCBK3###. It displays that strategy groups are correctly set (40 for basic/endurance, 20 for custom make-to-order) and production versions are fully active.",
-    36: "This step verifies that the Production Order #10000### has been successfully converted and registered on the shop floor. Displaying the order details allows you to confirm that the routing operations and material components (frame, wheels, GPS) are fully committed.",
+    31: "This transaction displays the General Ledger (G/L) accounts balance list. It allows the accountant to check that the G/L bank account (18100999) was credited by 13,000 EUR and the trade payables account (21100999) was debited, balancing the cash clearing.",
+    32: "A Routing defines the sequential operations (work centers, setup times, machine times) required to manufacture a product. Creating a routing for the custom Carbon Bike (XM30###) by copying XM20### ensures that the shop floor worker knows exactly how to assemble this custom-ordered bike.",
+    33: "Creates the active Production Version for the custom XM30### bike. This links the custom Bill of Material (BOM) to the newly created XM30### routing, which is a mandatory prerequisite in ERP to convert make-to-order sales orders into production orders.",
+    34: "Verifies the material master record details for the three bikes XM10###, XM20###, and XM30###. It displays that strategy groups are correctly set (40 for basic/endurance, 20 for custom make-to-order) and production versions are fully active.",
+    36: "This step verifies that the Production Order #10001### has been successfully converted and registered on the shop floor. Displaying the order details allows you to confirm that the routing operations and material components (frame, wheels, GPS) are fully committed.",
     38: "This step checks the status of the Production Order after confirming the partial completion (2 units) in Step 37. It displays the order status as PCNF (Partially Confirmed) and checks that actual assembly costs are being accrued.",
     40: "This step checks the status of the Production Order after confirming the complete completion (remaining 3 units) in Step 39. It verifies that the order status has changed to CNF (Confirmed), meaning all 5 units are fully assembled and ready for storage.",
     42: "This step displays the production cost analysis report. It compares the target manufacturing cost (standard inventory value) against the actual costs incurred (material issues and work center activity hours), helping controllers track cost variances.",
     43: "Variance Calculation calculates the financial differences between target costs and actual costs. This calculates any cost variance (over-allocations or under-allocations) on the shop floor before closing and settling the production order.",
-    45: "This transaction displays the current inventory levels for your finished product GCBK1###. It confirms that the stock has increased from 0 to 5 units in Heidelberg, representing the finished bikes received from the production shop floor.",
+    45: "This transaction displays the current inventory levels for your finished product XM10###. It confirms that the stock has increased from 0 to 5 units in Munich, representing the finished bikes received from the production shop floor.",
     46: "The Track Sales Orders app displays the chronological lifecycle of the customer order. It shows that Sales Order #300000### has been created and the inventory is now available in stock, indicating that the warehouse supervisor can proceed to delivery.",
     48: "Tracks the Sales Order status again after creating the Outbound Delivery in Step 47. It displays that the sales order has moved from 'Open' to 'Being Processed', confirming that the delivery note is registered in the shipping queue.",
-    50: "Checks the inventory levels after picking and posting the Goods Issue in Step 49. It displays that stock has decreased from 5 units to 0 (all 5 units shipped to Elbe Cycle), confirming that goods have physically left the Heidelberg plant."
+    50: "Checks the inventory levels after picking and posting the Goods Issue in Step 49. It displays that stock has decreased from 5 units to 0 (all 5 units shipped to Alpine Velo), confirming that goods have physically left the Munich plant."
   };
 
   // Sleek modal overlay renderer for field information
@@ -1105,15 +1103,15 @@ document.addEventListener("DOMContentLoaded", () => {
         title: "Procure-to-Pay (Materials Management)",
         icon: "local_shipping",
         nodes: [
-          { name: "Perform MRP", step: 13, out: "MRP Run complete", desc: "Material Requirements Planning execution.", app: "MD01N - MRP Live", input: "Plant HD00" },
-          { name: "Convert PR", step: 15, out: docs.purchaseRequisition, desc: "Convert planned order to purchase requisition.", app: "Convert Planned Orders", input: "Material GCBK1###" },
+          { name: "Perform MRP", step: 13, out: "MRP Run complete", desc: "Material Requirements Planning execution.", app: "MD01N - MRP Live", input: "Plant MU10" },
+          { name: "Convert PR", step: 15, out: docs.purchaseRequisition, desc: "Convert planned order to purchase requisition.", app: "Convert Planned Orders", input: "Material XM10###" },
           { name: "Create Vendor", step: 16, out: docs.vendorId, desc: "Setup external supplier master data.", app: "Maintain Business Partner", input: "Vendor details" },
           { name: "Create RFQ", step: 17, out: docs.vendorRfq, desc: "Request for quotation from supplier.", app: "Create RFQ", input: "Material, Quantity" },
           { name: "Vendor Quotation", step: 18, out: docs.vendorQuotation, desc: "Supplier's price offer.", app: "Maintain Quotation", input: "Price 130 EUR" },
           { name: "Purchase Order", step: 20, out: docs.purchaseOrder, desc: "Legal binding contract to purchase.", app: "Create Purchase Order", input: "Ref Quotation #" },
-          { name: "Goods Receipt", step: 22, out: docs.goodsReceiptPo, desc: "Physical receipt into warehouse.", app: "Post Goods Receipt for PO", input: "PO #, Sloc TG00" },
+          { name: "Goods Receipt", step: 22, out: docs.goodsReceiptPo, desc: "Physical receipt into warehouse.", app: "Post Goods Receipt for PO", input: "PO #, Sloc RM10" },
           { name: "Supplier Invoice", step: 25, out: docs.supplierInvoice, desc: "Financial liability recorded.", app: "Create Incoming Invoice", input: "PO #, Amount" },
-          { name: "Payment", step: 28, out: docs.outgoingPayment, desc: "Clearing Accounts Payable.", app: "Post Outgoing Payments", input: "Bank 100000" }
+          { name: "Payment", step: 28, out: docs.outgoingPayment, desc: "Clearing Accounts Payable.", app: "Post Outgoing Payments", input: "Bank 18100999" }
         ]
       },
       {
@@ -1124,7 +1122,7 @@ document.addEventListener("DOMContentLoaded", () => {
           { name: "Independent Req.", step: 10, out: "PIR Created", desc: "Forecast demand for products.", app: "Create PIRs", input: "Quantity, Month" },
           { name: "Convert Prod. Order", step: 35, out: docs.productionOrder, desc: "Authorize manufacturing floor.", app: "Create Production Order", input: "Planned Order #" },
           { name: "Confirm Production", step: 39, out: "Yield Confirmed", desc: "Report completed manufacturing quantities.", app: "Enter Production Order Confirmation", input: "Yield Qty" },
-          { name: "Goods Receipt (FG)", step: 41, out: docs.goodsReceiptProd, desc: "Finished goods put into stock.", app: "Goods Receipt for Order", input: "Order #, Sloc FG00" },
+          { name: "Goods Receipt (FG)", step: 41, out: docs.goodsReceiptProd, desc: "Finished goods put into stock.", app: "Goods Receipt for Order", input: "Order #, Sloc FG10" },
           { name: "Settle Costs", step: 44, out: "Order Settled", desc: "Allocate costs to inventory or COGS.", app: "Settle Production Order", input: "Order #" }
         ]
       },
@@ -1133,10 +1131,10 @@ document.addEventListener("DOMContentLoaded", () => {
         icon: "point_of_sale",
         nodes: [
           { name: "Create Customer", step: 1, out: docs.customerId, desc: "Setup customer master data.", app: "Maintain Business Partner", input: "Customer Name, Address" },
-          { name: "Sales Inquiry", step: 5, out: docs.salesInquiry, desc: "Customer request for information.", app: "Create Inquiry", input: "Material GPS1###" },
+          { name: "Sales Inquiry", step: 5, out: docs.salesInquiry, desc: "Customer request for information.", app: "Create Inquiry", input: "Material ZC10###" },
           { name: "Sales Quotation", step: 6, out: docs.salesQuotation, desc: "Legally binding offer to customer.", app: "Create Quotation", input: "Ref Inquiry #" },
           { name: "Sales Order", step: 7, out: docs.salesOrder, desc: "Confirmed order from customer.", app: "Create Sales Order", input: "Ref Quotation #" },
-          { name: "Outbound Delivery", step: 47, out: docs.outboundDelivery, desc: "Initiate shipping process.", app: "Create Outbound Delivery", input: "Shipping Point HD00" },
+          { name: "Outbound Delivery", step: 47, out: docs.outboundDelivery, desc: "Initiate shipping process.", app: "Create Outbound Delivery", input: "Shipping Point MU10" },
           { name: "Pick & Goods Issue", step: 49, out: "GI Posted", desc: "Decrease inventory, ship goods.", app: "Pick and Goods Issue", input: "Delivery #" },
           { name: "Customer Invoice", step: 51, out: docs.customerInvoice, desc: "Revenue recognition and invoice sent.", app: "Create Billing Document", input: "Ref Delivery #" },
           { name: "Incoming Payment", step: 53, out: docs.incomingPayment, desc: "Clearing Accounts Receivable.", app: "Post Incoming Payments", input: "Customer, Bank" }
@@ -1248,4 +1246,3 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
 });
-

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -232,7 +232,7 @@
       <p>The offline Excel template workbook is designed to mirror the <strong>modules and business functions</strong> of the web interface. Grouping steps into separate tabs makes the end-to-end integration cycles exceptionally easy to understand and fill out offline.</p>
       
       <div class="folder-tree">
-📁 ERP_template_empty.xlsx (10 Sheets)<br>
+📄 ERP_template_empty.xlsx (10 Sheets)<br>
 ├── 📄 Tab 1: Progress &amp; Config &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;(Student ID &amp; Completed Step Indices)<br>
 ├── 📄 Tab 2: Generated Documents &nbsp; &nbsp; &nbsp; &nbsp; (Simulated ERP Document DB Registry)<br>
 ├── 📄 Tab 3: Sales &amp; Distribution Setup &nbsp; (Setup Master Data - Step 1 to 3)<br>
@@ -300,13 +300,13 @@
           <tr>
             <td><strong>Customer ID</strong></td>
             <td>`customerId`</td>
-            <td><strong>`US00045`</strong></td>
+            <td><strong>`ALPIN045`</strong></td>
             <td>Business partner master ID created in Step 1.</td>
           </tr>
           <tr>
             <td><strong>Sales Inquiry ID</strong></td>
             <td>`salesInquiry`</td>
-            <td><strong>`100000045`</strong></td>
+            <td><strong>`1ZN45000045`</strong></td>
             <td>Standard pre-sales inquiry document.</td>
           </tr>
           <tr>
@@ -336,14 +336,14 @@
           <tr>
             <td><strong>Production Order ID</strong></td>
             <td>`productionOrder`</td>
-            <td><strong>`10000045`</strong></td>
+            <td><strong>`1ZN4500045`</strong></td>
             <td>Shop floor authorization document for manufacturing assembly.</td>
           </tr>
           <tr>
             <td><strong>Outbound Delivery ID</strong></td>
             <td>`outboundDelivery`</td>
             <td><strong>`800000045`</strong></td>
-            <td>Shipping delivery note registered in Heidelberg queue.</td>
+            <td>Shipping delivery note registered in Stuttgart queue.</td>
           </tr>
         </tbody>
       </table>
@@ -351,7 +351,7 @@
 
     <!-- Card 4: Tab 3-10 details -->
     <div class="card">
-      <h2>📝 Tabs 3 to 10: Detailed Transaction Logs</h2>
+      <h2>📄 Tabs 3 to 10: Detailed Transaction Logs</h2>
       <p>These sheets are where you log your step-by-step transaction form field entries. In each sheet, <strong>Column F (Entered Value)</strong> is the designated input column.</p>
       
       <h3>📚 Standard ERP Case Study Value Guidelines:</h3>
@@ -370,37 +370,37 @@
           <tr>
             <td>Company Code</td>
             <td>`company_code`</td>
-            <td><strong>`DE00`</strong></td>
+            <td><strong>`ZN00`</strong></td>
             <td>Identifies the legal accounting subsidiary in Germany.</td>
           </tr>
           <tr>
             <td>Sales Organization</td>
             <td>`sales_org`</td>
-            <td><strong>`DS00`</strong></td>
+            <td><strong>`ZN10`</strong></td>
             <td>Wholesale division responsible for distributing products.</td>
           </tr>
           <tr>
             <td>Delivering Plant</td>
             <td>`plant` / `shipping_point`</td>
-            <td><strong>`HD00`</strong></td>
-            <td>The physical manufacturing plant and shipping hub in Heidelberg.</td>
+            <td><strong>`MU10`</strong></td>
+            <td>The physical manufacturing plant and shipping hub in Stuttgart.</td>
           </tr>
           <tr>
             <td>Reconciliation Account (Customer)</td>
             <td>`recon_account`</td>
-            <td><strong>`12000000`</strong></td>
+            <td><strong>`11SK01500`</strong></td>
             <td>Reconciles trade receivables domestic ledger in the general ledger.</td>
           </tr>
           <tr>
             <td>Reconciliation Account (Vendor)</td>
             <td>`recon_account`</td>
-            <td><strong>`30000000`</strong></td>
+            <td><strong>`21SK01500`</strong></td>
             <td>Reconciles accounts payable vendor liabilities in the general ledger.</td>
           </tr>
           <tr>
             <td>Payment Terms</td>
             <td>`payment_term`</td>
-            <td><strong>`0001`</strong></td>
+            <td><strong>`PM01`</strong></td>
             <td>Payable immediately, net due (standard wholesale baseline agreement).</td>
           </tr>
         </tbody>
@@ -420,38 +420,38 @@
           <tr>
             <td>Customer Name</td>
             <td>`name`</td>
-            <td>`1 Elbe Cycle ###`</td>
-            <td><strong>`1 Elbe Cycle 045`</strong></td>
+            <td>`1 Alpine Velo ###`</td>
+            <td><strong>`1 Alpine Velo 045`</strong></td>
           </tr>
           <tr>
             <td>Basic Bike ID</td>
             <td>`material`</td>
-            <td>`GCBK1###`</td>
-            <td><strong>`GCBK1045`</strong></td>
+            <td>`XM10###`</td>
+            <td><strong>`XM10045`</strong></td>
           </tr>
           <tr>
             <td>Endurance Bike ID</td>
             <td>`material`</td>
-            <td>`GCBK2###`</td>
-            <td><strong>`GCBK2045`</strong></td>
+            <td>`XM20###`</td>
+            <td><strong>`XM20045`</strong></td>
           </tr>
           <tr>
             <td>Custom Carbon Bike</td>
             <td>`material`</td>
-            <td>`GCBK3###`</td>
-            <td><strong>`GCBK3045`</strong></td>
+            <td>`XM30###`</td>
+            <td><strong>`XM30045`</strong></td>
           </tr>
           <tr>
             <td>Integrated GPS Computer</td>
             <td>`gps_id`</td>
-            <td>`GPS1###`</td>
-            <td><strong>`GPS1045`</strong></td>
+            <td>`ZC10###`</td>
+            <td><strong>`NXM1045`</strong></td>
           </tr>
           <tr>
             <td>Vendor / Supplier Name</td>
             <td>`name`</td>
-            <td>`1 MagdePedal ###`</td>
-            <td><strong>`1 MagdePedal 045`</strong></td>
+            <td>`1 AlpineGear Solutions ###`</td>
+            <td><strong>`1 AlpineGear Solutions 045`</strong></td>
           </tr>
         </tbody>
       </table>
@@ -509,19 +509,19 @@
             <td><strong>Customer ID</strong></td>
             <td><code>customerId</code></td>
             <td>The unique ERP master business partner record ID representing the customer account.</td>
-            <td><code>US00045</code></td>
+            <td><code>ALPIN045</code></td>
           </tr>
           <tr>
             <td><strong>Customer Name</strong></td>
             <td><code>customerName</code></td>
             <td>Legal wholesale trading entity name. Contains the student ID to differentiate student database records.</td>
-            <td><code>1 Elbe Cycle 045</code></td>
+            <td><code>1 Alpine Velo 045</code></td>
           </tr>
           <tr>
             <td><strong>Sales Inquiry ID</strong></td>
             <td><code>salesInquiry</code></td>
             <td>Pre-sales document recording the customer's request for product pricing and availability.</td>
-            <td><code>100000045</code></td>
+            <td><code>1ZN45000045</code></td>
           </tr>
           <tr>
             <td><strong>Sales Quotation ID</strong></td>
@@ -545,7 +545,7 @@
             <td><strong>Vendor ID</strong></td>
             <td><code>vendorId</code></td>
             <td>Master record identifier representing the external partner/supplier supplying raw components.</td>
-            <td><code>VN00045</code></td>
+            <td><code>SUPP045</code></td>
           </tr>
           <tr>
             <td><strong>RFQ Document ID</strong></td>
@@ -569,12 +569,12 @@
             <td><strong>Production Order ID</strong></td>
             <td><code>productionOrder</code></td>
             <td>Released workshop authorization document directing shop floor workers to stage and assemble bikes.</td>
-            <td><code>10000045</code></td>
+            <td><code>1ZN4500045</code></td>
           </tr>
           <tr>
             <td><strong>Outbound Delivery ID</strong></td>
             <td><code>outboundDelivery</code></td>
-            <td>Shipping ledger document representing goods prepared for dispatch at the Heidelberg shipping point.</td>
+            <td>Shipping ledger document representing goods prepared for dispatch at the Stuttgart shipping point.</td>
             <td><code>800000045</code></td>
           </tr>
           <tr>
@@ -612,14 +612,14 @@
           <tr>
             <td><strong>Name</strong></td>
             <td><code>name</code></td>
-            <td>Legal name of the business partner organization. For customers, it is <code>1 Elbe Cycle ###</code> and for vendors, it is <code>1 MagdePedal Tech ###</code>.</td>
-            <td><code>1 Elbe Cycle ###</code> / <code>1 MagdePedal Tech ###</code></td>
+            <td>Legal name of the business partner organization. For customers, it is <code>1 Alpine Velo ###</code> and for vendors, it is <code>1 AlpineGear Solutions ###</code>.</td>
+            <td><code>1 Alpine Velo ###</code> / <code>1 AlpineGear Solutions ###</code></td>
           </tr>
           <tr>
             <td><strong>Street</strong></td>
             <td><code>street</code></td>
             <td>Registered street address of the customer's corporate office or warehouse facility.</td>
-            <td><code>Main Street</code></td>
+            <td><code>Apex Boulevard</code></td>
           </tr>
           <tr>
             <td><strong>House Number</strong></td>
@@ -631,13 +631,13 @@
             <td><strong>City</strong></td>
             <td><code>city</code></td>
             <td>Physical city location of the customer, used by ERP to calculate regional sales tax and route freight.</td>
-            <td><code>Magdeburg</code></td>
+            <td><code>Stuttgart</code></td>
           </tr>
           <tr>
             <td><strong>Postal Code</strong></td>
             <td><code>postal_code</code></td>
             <td>Geographic area mailing code of the wholesale customer.</td>
-            <td><code>39106</code></td>
+            <td><code>70173</code></td>
           </tr>
           <tr>
             <td><strong>Country/Region</strong></td>
@@ -649,7 +649,7 @@
             <td><strong>Region</strong></td>
             <td><code>region</code></td>
             <td>German federal state code representing Saxony-Anhalt (15), used for regional commercial grouping.</td>
-            <td><code>15 (Saxony-Anhalt)</code></td>
+            <td><code>08 (Baden-Württemberg)</code></td>
           </tr>
           <tr>
             <td><strong>Language</strong></td>
@@ -667,77 +667,77 @@
             <td><strong>Transportation Zone</strong></td>
             <td><code>trans_zone</code></td>
             <td>Freight delivery band representing regional distance criteria for calculating transit times.</td>
-            <td><code>Area North</code></td>
+            <td><code>Zone South</code></td>
           </tr>
           <tr>
             <td><strong>Company Code</strong></td>
             <td><code>company_code</code></td>
-            <td>The highest structural unit in financial accounting. <code>DE00</code> represents the legal German subsidiary (Global Bike Germany GmbH).</td>
-            <td><code>DE00</code></td>
+            <td>The highest structural unit in financial accounting. <code>ZN00</code> represents the legal German subsidiary (Zenith Electro-Mobility GmbH).</td>
+            <td><code>ZN00</code></td>
           </tr>
           <tr>
             <td><strong>Reconciliation Account</strong></td>
             <td><code>recon_account</code></td>
-            <td>Aggregating G/L balance sheet account. Account <code>12000000</code> groups domestic Trade Receivables, while account <code>30000000</code> groups supplier Trade Payables.</td>
-            <td><code>12000000</code> / <code>30000000</code></td>
+            <td>Aggregating G/L balance sheet account. Account <code>11SK01500</code> groups domestic Trade Receivables, while account <code>21SK01500</code> groups supplier Trade Payables.</td>
+            <td><code>11SK01500</code> / <code>21SK01500</code></td>
           </tr>
           <tr>
             <td><strong>Sort Key</strong></td>
             <td><code>sort_key</code></td>
-            <td>Rules mapping how transactions are sorted in accounting reports. <code>001</code> sorts items by Posting Date.</td>
-            <td><code>001</code></td>
+            <td>Rules mapping how transactions are sorted in accounting reports. <code>SK01</code> sorts items by Posting Date.</td>
+            <td><code>SK01</code></td>
           </tr>
           <tr>
             <td><strong>Payment Term</strong></td>
             <td><code>payment_term</code></td>
-            <td>Agreed timeline for financial payment. Code <code>0001</code> specifies that payment is due immediately, net.</td>
-            <td><code>0001</code></td>
+            <td>Agreed timeline for financial payment. Code <code>PM01</code> specifies that payment is due immediately, net.</td>
+            <td><code>PM01</code></td>
           </tr>
           <tr>
             <td><strong>Product Template (Basic)</strong></td>
             <td><code>temp_basic</code></td>
-            <td>Pre-existing product master record (<code>DXTR1###</code> Black Deluxe Touring Bike) used as a template to copy baseline physical data.</td>
-            <td><code>DXTR1###</code></td>
+            <td>Pre-existing product master record (<code>XM-REF1-###</code> Black Deluxe Touring Bike) used as a template to copy baseline physical data.</td>
+            <td><code>XM-REF1-###</code></td>
           </tr>
           <tr>
             <td><strong>Product Template (Endur)</strong></td>
             <td><code>temp_endurance</code></td>
-            <td>Pre-existing product master record (<code>DXTR2###</code> Silver Deluxe Touring Bike) used as a template.</td>
-            <td><code>DXTR2###</code></td>
+            <td>Pre-existing product master record (<code>XM-REF2-###</code> Silver Deluxe Touring Bike) used as a template.</td>
+            <td><code>XM-REF2-###</code></td>
           </tr>
           <tr>
             <td><strong>New Basic Bike ID</strong></td>
-            <td><code>gcbk1_id</code></td>
+            <td><code>xm10_id</code></td>
             <td>Unique material catalog code representing the new Basic Sport &amp; Commute bicycle product.</td>
-            <td><code>GCBK1###</code></td>
+            <td><code>XM10###</code></td>
           </tr>
           <tr>
             <td><strong>Basic Bike Description</strong></td>
-            <td><code>gcbk1_desc</code></td>
+            <td><code>xm10_desc</code></td>
             <td>Detailed commercial product name cataloged in the ERP master record.</td>
             <td><code>Global Basic Sport &amp; Commute Bike</code></td>
           </tr>
           <tr>
             <td><strong>New Endurance Bike ID</strong></td>
-            <td><code>gcbk2_id</code></td>
+            <td><code>xm20_id</code></td>
             <td>Unique material catalog code representing the new Endurance Road bicycle product.</td>
-            <td><code>GCBK2###</code></td>
+            <td><code>XM20###</code></td>
           </tr>
           <tr>
             <td><strong>Endurance Description</strong></td>
-            <td><code>gcbk2_desc</code></td>
+            <td><code>xm20_desc</code></td>
             <td>Detailed commercial product name cataloged in the master record.</td>
             <td><code>Global Endurance Road Bike</code></td>
           </tr>
           <tr>
             <td><strong>New Carbon Bike ID</strong></td>
-            <td><code>gcbk3_id</code></td>
+            <td><code>xm30_id</code></td>
             <td>Unique material catalog code representing the custom hand-built Carbon bicycle product.</td>
-            <td><code>GCBK3###</code></td>
+            <td><code>XM30###</code></td>
           </tr>
           <tr>
             <td><strong>Carbon Bike Description</strong></td>
-            <td><code>gcbk3_desc</code></td>
+            <td><code>xm30_desc</code></td>
             <td>Detailed commercial product name cataloged in the master record.</td>
             <td><code>Global Carbon Custom Bike</code></td>
           </tr>
@@ -763,25 +763,25 @@
             <td><strong>Sales Organization</strong></td>
             <td><code>sales_org</code></td>
             <td>Organizational unit responsible for negotiating wholesale terms and selling bicycles in Germany.</td>
-            <td><code>DS00</code></td>
+            <td><code>ZN10</code></td>
           </tr>
           <tr>
-            <td><strong>GCBK1### Price (EUR)</strong></td>
-            <td><code>price_gcbk1</code></td>
+            <td><strong>XM10### Price (EUR)</strong></td>
+            <td><code>price_xm10</code></td>
             <td>Standard wholesale selling price negotiated for basic bikes.</td>
-            <td><code>1500</code></td>
+            <td><code>1950</code></td>
           </tr>
           <tr>
-            <td><strong>GCBK2### Price (EUR)</strong></td>
-            <td><code>price_gcbk2</code></td>
+            <td><strong>XM20### Price (EUR)</strong></td>
+            <td><code>price_xm20</code></td>
             <td>Standard wholesale selling price negotiated for endurance road bikes.</td>
-            <td><code>3500</code></td>
+            <td><code>3950</code></td>
           </tr>
           <tr>
-            <td><strong>GCBK3### Price (EUR)</strong></td>
-            <td><code>price_gcbk3</code></td>
+            <td><strong>XM30### Price (EUR)</strong></td>
+            <td><code>price_xm30</code></td>
             <td>Standard wholesale selling price negotiated for premium carbon custom bikes.</td>
-            <td><code>4000</code></td>
+            <td><code>4450</code></td>
           </tr>
         </tbody>
       </table>
@@ -806,20 +806,20 @@
           <tr>
             <td><strong>Base Unit of Measure</strong></td>
             <td><code>uom</code></td>
-            <td>Physical baseline counting unit for inventory tracking. <code>PC</code> stands for pieces.</td>
-            <td><code>PC</code></td>
+            <td>Physical baseline counting unit for inventory tracking. <code>EA</code> stands for pieces.</td>
+            <td><code>EA</code></td>
           </tr>
           <tr>
             <td><strong>Material Group</strong></td>
             <td><code>mat_group</code></td>
             <td>Categorization code used to group raw component materials for reporting and capacity scheduling.</td>
-            <td><code>UTILITY</code></td>
+            <td><code>ACCESSORY</code></td>
           </tr>
           <tr>
             <td><strong>Delivering Plant</strong></td>
             <td><code>plant</code></td>
             <td>The production facility or warehouse location where the raw components are received and registered.</td>
-            <td><code>HD00</code></td>
+            <td><code>MU10</code></td>
           </tr>
         </tbody>
       </table>
@@ -842,20 +842,20 @@
             <td><code>IN</code></td>
           </tr>
           <tr>
-            <td><strong>GCBK1### Quantity</strong></td>
-            <td><code>qty_gcbk1</code></td>
-            <td>Number of basic bikes ordered by the customer (Elbe Cycle) in the pre-sales inquiries.</td>
+            <td><strong>XM10### Quantity</strong></td>
+            <td><code>qty_xm10</code></td>
+            <td>Number of basic bikes ordered by the customer (Alpine Velo) in the pre-sales inquiries.</td>
             <td><code>5</code></td>
           </tr>
           <tr>
-            <td><strong>GCBK2### Quantity</strong></td>
-            <td><code>qty_gcbk2</code></td>
+            <td><strong>XM20### Quantity</strong></td>
+            <td><code>qty_xm20</code></td>
             <td>Number of endurance road bikes ordered by the customer in the pre-sales inquiries.</td>
             <td><code>2</code></td>
           </tr>
           <tr>
-            <td><strong>GCBK3### Quantity</strong></td>
-            <td><code>qty_gcbk3</code></td>
+            <td><strong>XM30### Quantity</strong></td>
+            <td><code>qty_xm30</code></td>
             <td>Number of carbon custom bikes ordered by the customer in the pre-sales inquiries.</td>
             <td><code>1</code></td>
           </tr>
@@ -869,7 +869,7 @@
             <td><strong>Reference Inquiry ID</strong></td>
             <td><code>ref_inquiry</code></td>
             <td>Prior Inquiry document number used to copy all terms and partner details over to the Quotation.</td>
-            <td>E.g., <code>100000045</code></td>
+            <td>E.g., <code>1ZN45000045</code></td>
           </tr>
           <tr>
             <td><strong>Quotation Type</strong></td>
@@ -907,19 +907,19 @@
             <td><strong>Routing Group Title</strong></td>
             <td><code>routing_title</code></td>
             <td>Group ID defining the manufacturing sequence of work center operations required to assemble bikes.</td>
-            <td><code>GCBK1###-HD</code></td>
+            <td><code>XM10###-HD</code></td>
           </tr>
           <tr>
             <td><strong>Delivering Plant</strong></td>
             <td><code>plant</code></td>
             <td>Shop floor plant where routing work center operations are executed.</td>
-            <td><code>HD00</code></td>
+            <td><code>MU10</code></td>
           </tr>
           <tr>
             <td><strong>Product Group ID</strong></td>
             <td><code>pg_id</code></td>
             <td>Category code grouping materials together for aggregate inventory forecasting.</td>
-            <td><code>PG-GCBK###</code></td>
+            <td><code>PG-AV###</code></td>
           </tr>
           <tr>
             <td><strong>Description</strong></td>
@@ -931,7 +931,7 @@
             <td><strong>Members</strong></td>
             <td><code>pg_members</code></td>
             <td>Comma-separated list of individual product IDs included in the product group.</td>
-            <td><code>GCBK1###, GCBK2###</code></td>
+            <td><code>XM10###, XM20###</code></td>
           </tr>
           <tr>
             <td><strong>Forecast Quantity</strong></td>
@@ -969,13 +969,13 @@
             <td><strong>Material / Product Group</strong></td>
             <td><code>target</code></td>
             <td>The material code or product group ID targeted for MRP calculation to identify component shortfalls.</td>
-            <td><code>PG-GCBK###</code></td>
+            <td><code>PG-AV###</code></td>
           </tr>
           <tr>
             <td><strong>Delivering Plant</strong></td>
             <td><code>plant</code></td>
             <td>The production facility where the inventory shortage calculation is executed.</td>
-            <td><code>HD00</code></td>
+            <td><code>MU10</code></td>
           </tr>
           <tr>
             <td><strong>Confirm Action</strong></td>
@@ -1007,7 +1007,7 @@
             <td><strong>Collective Number</strong></td>
             <td><code>coll_num</code></td>
             <td>Multi-character reference tag used to group multiple supplier RFQs together for comparative cost analysis.</td>
-            <td><code>COLL###</code></td>
+            <td><code>ZENITH###</code></td>
           </tr>
           <tr>
             <td><strong>RFQ Quantity</strong></td>
@@ -1019,7 +1019,7 @@
             <td><strong>Supplier</strong></td>
             <td><code>supplier</code></td>
             <td>The supplier master record name selected to receive the RFQ or Purchase Order.</td>
-            <td><code>1 MagdePedal Tech ###</code></td>
+            <td><code>1 AlpineGear Solutions ###</code></td>
           </tr>
           <tr>
             <td><strong>Unit Price (EUR)</strong></td>
@@ -1048,14 +1048,14 @@
           <tr>
             <td><strong>Goods Movement Type</strong></td>
             <td><code>movement</code></td>
-            <td>Three-digit key controlling physical inventory transactions. <code>561</code> initializes stock; <code>101</code> posts goods receipt.</td>
-            <td><code>101</code> / <code>561</code></td>
+            <td>Three-digit key controlling physical inventory transactions. <code>MT50</code> initializes stock; <code>MT10</code> posts goods receipt.</td>
+            <td><code>MT10</code> / <code>MT50</code></td>
           </tr>
           <tr>
             <td><strong>Storage Location</strong></td>
             <td><code>storage_loc</code></td>
-            <td>Warehouse subdivision where stocks are held. <code>TG00</code> is Trading Goods; <code>RM00</code> is Raw Materials.</td>
-            <td><code>TG00</code> / <code>RM00</code></td>
+            <td>Warehouse subdivision where stocks are held. <code>RM10</code> is Trading Goods; <code>SL20</code> is Raw Materials.</td>
+            <td><code>RM10</code> / <code>SL20</code></td>
           </tr>
           <tr>
             <td><strong>Supplier Invoice Number</strong></td>
@@ -1093,7 +1093,7 @@
             <td><strong>Production Order ID</strong></td>
             <td><code>prod_order</code></td>
             <td>Official shop floor authorization document released to assemble the bicycles.</td>
-            <td>E.g., <code>10000045</code></td>
+            <td>E.g., <code>1ZN4500045</code></td>
           </tr>
           <tr>
             <td><strong>Yield to Confirm</strong></td>
@@ -1122,20 +1122,20 @@
         </thead>
         <tbody>
           <tr>
-            <td><strong>Picked Qty GCBK1###</strong></td>
-            <td><code>pick_gcbk1</code></td>
-            <td>Physical quantity of basic bikes fetched from warehouse shelves at Heidelberg for customer dispatch.</td>
+            <td><strong>Picked Qty XM10###</strong></td>
+            <td><code>pick_xm10</code></td>
+            <td>Physical quantity of basic bikes fetched from warehouse shelves at Stuttgart for customer dispatch.</td>
             <td><code>5</code></td>
           </tr>
           <tr>
-            <td><strong>Picked Qty GCBK2###</strong></td>
-            <td><code>pick_gcbk2</code></td>
+            <td><strong>Picked Qty XM20###</strong></td>
+            <td><code>pick_xm20</code></td>
             <td>Physical quantity of endurance road bikes fetched from warehouse shelves for customer dispatch.</td>
             <td><code>2</code></td>
           </tr>
           <tr>
-            <td><strong>Picked Qty GCBK3###</strong></td>
-            <td><code>pick_gcbk3</code></td>
+            <td><strong>Picked Qty XM30###</strong></td>
+            <td><code>pick_xm30</code></td>
             <td>Physical quantity of carbon custom bikes fetched from warehouse shelves for customer dispatch.</td>
             <td><code>1</code></td>
           </tr>
@@ -1148,8 +1148,8 @@
           <tr>
             <td><strong>Shipping Point</strong></td>
             <td><code>shipping_point</code></td>
-            <td>Location from which physical goods are shipped. Heidelberg plant shipping point <code>HD00</code>.</td>
-            <td><code>HD00</code></td>
+            <td>Location from which physical goods are shipped. Stuttgart plant shipping point <code>MU10</code>.</td>
+            <td><code>MU10</code></td>
           </tr>
           <tr>
             <td><strong>Clearing Amount (EUR)</strong></td>
@@ -1161,7 +1161,7 @@
             <td><strong>Bank Account</strong></td>
             <td><code>bank_acct</code></td>
             <td>General Ledger cash asset account representing bank checking assets.</td>
-            <td><code>10000000</code></td>
+            <td><code>1ZN45000</code></td>
           </tr>
         </tbody>
       </table>
@@ -1182,3 +1182,5 @@
 
 </body>
 </html>
+
+

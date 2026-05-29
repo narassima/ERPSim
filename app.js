@@ -742,10 +742,14 @@ document.addEventListener("DOMContentLoaded", () => {
               isRefCorrect = val === refVal;
             }
 
-            // Standard match checks
+            // Standard match checks — only strict for SAP code fields
             let isStandardMatch = true;
             if (expectedVal && !f.placeholder && f.name !== "status" && !f.name.startsWith("ref_") && f.name !== "prod_order") {
-              isStandardMatch = val.toLowerCase() === expectedVal.toLowerCase();
+              if (isSapCode(f, expectedVal)) {
+                // SAP code: must match exactly (case-insensitive)
+                isStandardMatch = val.toLowerCase() === expectedVal.toLowerCase();
+              }
+              // else: free-text field — any non-empty value is accepted (already checked by !val above)
             }
 
             if (!val || !isRefCorrect || !isStandardMatch) {
@@ -759,8 +763,18 @@ document.addEventListener("DOMContentLoaded", () => {
       });
 
       if (!isValid) {
+        // Collect the names of invalid fields for a targeted error message
+        const invalidLabels = [];
+        document.querySelectorAll(".fiori-input.invalid").forEach(inp => {
+          const grp = inp.closest(".fiori-form-group");
+          if (grp) {
+            const lbl = grp.querySelector("label");
+            if (lbl) invalidLabels.push(`"${lbl.textContent.trim()}"`);
+          }
+        });
+        const fieldList = invalidLabels.length ? ` — check: ${invalidLabels.join(", ")}` : "";
         feedback.className = "feedback-box error";
-        feedback.innerText = "❌ Validation Failed! Some input fields are blank, do not match the required defaults in the ERP Case Study guidelines, or referenced invalid document IDs. Try clicking 'Fill Correct Defaults' if you're stuck.";
+        feedback.innerHTML = `❌ <strong>Validation Failed!</strong> Some fields are blank or contain incorrect SAP codes${fieldList}. <br><small>💡 SAP code fields (marked with <strong>🔑 Required SAP code</strong>) must be entered exactly as shown. Free-text fields accept any value. Click <strong>Autofill Defaults</strong> if you are stuck.</small>`;
         return;
       }
 
@@ -818,6 +832,31 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  /**
+   * Determines if a field's expected value is a strict SAP code that the student
+   * must enter exactly (e.g. ZN10, MU10, FLCU00, WS, QT, PR00).
+   * Free-text fields (names, descriptions, addresses, quantities, prices, dates)
+   * return false and only require a non-empty value.
+   */
+  function isSapCode(field, resolvedValue) {
+    // Reference fields are always handled separately (cross-step memory check)
+    if (field.name.startsWith("ref_") || field.name === "prod_order" || field.name === "planned_order") return false;
+    // Status / placeholder-only fields are free text
+    if (field.name === "status" || field.placeholder) return false;
+    // No value defined → can't be a code
+    if (!resolvedValue) return false;
+    // Purely numeric values are free-entry quantities / prices / dates
+    if (/^\d+(\.\d+)?$/.test(resolvedValue)) return false;
+    // Values with spaces are free-text (names, descriptions, addresses, etc.)
+    if (resolvedValue.includes(" ")) return false;
+    // Values containing ### are student-specific IDs → we validate those strictly
+    // (they already replace ### with the student ID so no spaces will be present)
+    // Short alphanumeric codes (≤ 20 chars, no spaces): treat as SAP code
+    if (resolvedValue.length <= 20) return true;
+    // Long values are free text
+    return false;
+  }
+
   function renderRowFields(step, sId, docs, rowData, rowIndex) {
     return step.fields.map(f => {
       let val = f.value || "";
@@ -869,6 +908,30 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       const isReadonly = f.readonly ? "readonly style='background: var(--background); pointer-events: none;'" : "";
+
+      // Compute the expected value for hint display
+      const expectedVal = (f.value || "").replace(/###/g, sId);
+      const isCode = isSapCode(f, expectedVal);
+      const isRef = f.name.startsWith("ref_") || f.name === "prod_order" || f.name === "planned_order";
+
+      // Build the hint line
+      let hintHtml = "";
+      if (isCode && expectedVal && !f.readonly) {
+        hintHtml = `<span style="font-size: 0.72rem; color: var(--primary); font-weight: 700; margin-top: 4px; display: block;">
+          <span class="material-symbols-outlined" style="font-size: 12px; vertical-align: middle;">key</span>
+          Required SAP code: <code style="background: var(--primary-glow); padding: 1px 6px; border-radius: 6px; font-size: 0.72rem; color: var(--primary);">${expectedVal}</code>
+        </span>`;
+      } else if (isRef && f.placeholder) {
+        hintHtml = `<span style="font-size: 0.72rem; color: var(--warning); font-weight: 600; margin-top: 4px; display: block;">
+          <span class="material-symbols-outlined" style="font-size: 12px; vertical-align: middle;">history_edu</span>
+          ${f.placeholder} — enter the ID you recorded
+        </span>`;
+      } else if (!isCode && !isRef && !f.readonly && expectedVal) {
+        hintHtml = `<span style="font-size: 0.72rem; color: var(--text-muted); margin-top: 4px; display: block;">
+          <span class="material-symbols-outlined" style="font-size: 12px; vertical-align: middle;">edit_note</span>
+          Example: <em>${expectedVal}</em> &nbsp;(free entry — type your own value)
+        </span>`;
+      }
       
       return `
         <div class="fiori-form-group">
@@ -886,6 +949,7 @@ document.addEventListener("DOMContentLoaded", () => {
             placeholder="${(f.placeholder || f.value || '').replace(/###/g, sId)}"
             ${isReadonly}
           >
+          ${hintHtml}
         </div>
       `;
     }).join("");
